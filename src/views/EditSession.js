@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Input, Collapse, Modal } from "antd";
 import sessionList from "../mock/sessionList";
+import AddMusicForm from "../Templates/AddMusicForm";
+import AddNPCSessionForm from "../Templates/AddNPCSessionForm";
 
 const mockChapter = {
  id: (Math.random() * 1000).toFixed(0),
@@ -85,7 +87,8 @@ const EditSession = () => {
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
- //  const [musics, setMusics] = useState([]);
+ const [addMusicModalOpen, setMusicModalOpen] = useState(false);
+ const [addNPCModalOpen, setNPCModalOpen] = useState(false);
  //  const [npcs, setNPCs] = useState([]);
  //  const [monsters, setMonsters] = useState([]);
  //  const [challengers, setChallengers] = useState([]);
@@ -99,6 +102,25 @@ const EditSession = () => {
 
  const AddChapter = () => {
   const newChapters = [...chapters, mockChapter];
+  setChapters(newChapters);
+ };
+
+ const setMusics = (songs, index) => {
+  const newChapter = {
+   ...chapters[index],
+   playlist: songs,
+  };
+  chapters.splice(index, 1);
+  const newChapters = [...chapters, newChapter];
+  setChapters(newChapters);
+ };
+ const setNPCs = (npc, index) => {
+  const newChapter = {
+   ...chapters[index],
+   npcs: npc,
+  };
+  chapters.splice(index, 1);
+  const newChapters = [...chapters, newChapter];
   setChapters(newChapters);
  };
 
@@ -148,7 +170,10 @@ const EditSession = () => {
     </h1>
     <Collapse accordion bordered={false}>
      {chapters.map(
-      ({ id, text, npcs, playlist, monsters, challengers, magicItems }) => (
+      (
+       { id, text, npcs, playlist, monsters, challengers, magicItems },
+       indexChapter
+      ) => (
        <Panel key={id} header={`capítulo ${id}`}>
         <PlayerItem>
          <PlayerInfo>
@@ -162,7 +187,16 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>NPCs: </span>
-           <EditButton>Editar</EditButton>
+           <EditButton onClick={() => setNPCModalOpen(true)}>Editar</EditButton>
+           <AddNPCSessionForm
+            visible={addNPCModalOpen}
+            onClose={() => setNPCModalOpen(false)}
+            onSubmit={(npc) => {
+             setNPCs(npc, indexChapter);
+             setNPCModalOpen(false);
+            }}
+            npcsDefault={npcs}
+           />
           </PlayerInfoTitle>
           <div>
            {npcs.length > 0 ? (
@@ -182,7 +216,18 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>Músicas: </span>
-           <EditButton>Editar</EditButton>
+           <EditButton onClick={() => setMusicModalOpen(true)}>
+            Editar
+           </EditButton>
+           <AddMusicForm
+            visible={addMusicModalOpen}
+            onClose={() => setMusicModalOpen(false)}
+            onSubmit={(songs) => {
+             setMusics(songs, indexChapter);
+             setMusicModalOpen(false);
+            }}
+            musicsDefault={playlist}
+           />
           </PlayerInfoTitle>
           <div>
            {playlist.length > 0 ? (
