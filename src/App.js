@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Layout, Menu } from "antd";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { Home, Campains, EditCampain } from "./views";
+import { Home, Campains, EditCampain, EditSession } from "./views";
 import { Drawer } from "./Component";
 import "antd/dist/antd.css";
 
@@ -61,6 +61,7 @@ const App = () => {
         <Route exact path="/" component={Home} />
         <Route path="/campains/:id" component={EditCampain} />
         <Route path="/campains" component={Campains} />
+        <Route path="/sessions/newSession" component={EditSession} />
        </Switch>
       </Wrapper>
      </Content>

@@ -1,3 +1,6 @@
+import npcs from "./npcs";
+import playlist from "./playlist";
+
 const sessions = [
  {
   id: "1",
@@ -6,7 +9,19 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    text:
+     "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
+    playlist: playlist
+     .filter((playlist) => playlist.name === "Aventura")
+     .flatMap((music) => music.songs),
+    npcs: npcs,
+    magicItems: [],
+    challengers: [],
+    monsters: [],
+   },
+   {
+    id: "2",
+    text: "Vazio",
     playlist: [],
     npcs: [],
     magicItems: [],

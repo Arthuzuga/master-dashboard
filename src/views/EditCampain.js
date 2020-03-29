@@ -258,7 +258,7 @@ const EditCampain = () => {
    <CampainSection>
     <h1>
      <span>JOGADORES</span>
-     <DeleteButton onClick={OpenAddPlayerForm}>Adicinar</DeleteButton>
+     <DeleteButton onClick={OpenAddPlayerForm}>Adicionar</DeleteButton>
      <AddPlayerForm
       visible={addPlayerFormVisible}
       onClose={() => setPlayerFormVisible(false)}
@@ -284,7 +284,7 @@ const EditCampain = () => {
     <h1>
      <span>SESSÕES</span>
      <DeleteButton onClick={() => history.push("/sessions/newSession")}>
-      Adicinar
+      Adicionar
      </DeleteButton>
     </h1>
     <Collapse accordion bordered={false}>
@@ -303,7 +303,7 @@ const EditCampain = () => {
     <h1>
      <span>NPCs</span>
      <DeleteButton onClick={() => setNPCFormVisible(true)}>
-      Adicinar
+      Adicionar
      </DeleteButton>
      <AddNPCForm
       visible={addNPCFormVisible}
