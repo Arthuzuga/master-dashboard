@@ -16,4 +16,4 @@ You will also see any lint errors in the console.
 
 ### Deployment
 
-Coming up next on Netlify
+Enjoy it on: [https://5e80d57dccd9c74131763f99--jovial-galileo-20c616.netlify.com/](https://5e80d57dccd9c74131763f99--jovial-galileo-20c616.netlify.com/)
