@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { Card, Input, Collapse } from "antd";
+import { Card, Input, Collapse, Modal } from "antd";
 import sessionList from "../mock/sessionList";
 
-const mock = {
- id: "1",
- title: "As Chamas da Noite",
- description: "Descrição",
- chapters: [
-  {
-   id: "1",
-   text: "",
-   playlist: [],
-   npcs: [],
-   magicItems: [],
-   challengers: [],
-   monsters: [],
-  },
- ],
+const mockChapter = {
+ id: (Math.random() * 1000).toFixed(0),
+ text: "",
+ playlist: [],
+ npcs: [],
+ magicItems: [],
+ challengers: [],
+ monsters: [],
 };
 
 const { TextArea } = Input;
 const { Panel } = Collapse;
+const { confirm } = Modal;
 
 const SessionSection = styled.section`
  padding: 1rem 0;
@@ -35,14 +29,15 @@ const SessionInfo = styled.h2`
  font-size: 14px;
 `;
 
-// const EditButton = styled.button`
-//  border: 1px solid #767676;
-//  border-radius: 8px;
-//  background-color: #373737;
-//  color: white;
-//  font-weight: 400;
-//  cursor: pointer;
-// `;
+const EditButton = styled.button`
+ border: 1px solid #767676;
+ border-radius: 8px;
+ background-color: #373737;
+ color: white;
+ font-weight: 400;
+ cursor: pointer;
+ margin-left: 1rem;
+`;
 const DeleteButton = styled.button`
  border: none;
  border-radius: 8px;
@@ -57,7 +52,6 @@ const PlayerItem = styled.div`
  flex-direction: column;
  align-items: flex-start;
  width: 100%;
- padding: 1rem;
 `;
 
 const PlayerInfo = styled.div`
@@ -71,8 +65,19 @@ const PlayerInfo = styled.div`
  border-bottom: 1px solid #c7c7c7;
 `;
 
-const PlayerInfoTitle = styled.span`
+const PlayerInfoTitle = styled.div`
+ width: 100%;
+ display: flex;
+ justify-content: space-between;
  font-weight: bold;
+`;
+
+const DeleteChapterDiv = styled.div`
+ width: 100%;
+ display: flex;
+ justify-content: flex-end;
+ align-items: center;
+ padding-top: 1rem;
 `;
 
 const EditSession = () => {
@@ -80,14 +85,39 @@ const EditSession = () => {
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
- //  const [newChapter, setNewChapter] = useState("");
+ //  const [musics, setMusics] = useState([]);
+ //  const [npcs, setNPCs] = useState([]);
+ //  const [monsters, setMonsters] = useState([]);
+ //  const [challengers, setChallengers] = useState([]);
+ //  const [magicItems, setMagicItems] = useState([]);
 
  useEffect(() => {
   setId((Math.random() * 100).toFixed(0));
-  console.log(id);
   const chapterList = sessionList[0].chapters;
   setChapters(chapterList);
- }, [id]);
+ }, []);
+
+ const AddChapter = () => {
+  const newChapters = [...chapters, mockChapter];
+  setChapters(newChapters);
+ };
+
+ const showDeleteConfirm = (id) =>
+  confirm({
+   title: "Tem certeza em apagar esse capítulo?",
+   okText: "Apagar",
+   okType: "danger",
+   cancelText: "Cancelar",
+   content:
+    "Apagando essa sessão não será possível recuperar seus dados depois",
+   onOk() {
+    DeleteChapter(id);
+   },
+  });
+ const DeleteChapter = (id) => {
+  const newChapters = chapters.filter((chapter) => chapter.id !== id);
+  setChapters(newChapters);
+ };
 
  return (
   <Card title="Nova sessão" bordered={false} style={{ width: "100%" }}>
@@ -114,7 +144,7 @@ const EditSession = () => {
    <SessionSection>
     <h1>
      <span>Capítulos</span>
-     <DeleteButton onClick={() => console.log("oi")}>Adicionar</DeleteButton>
+     <DeleteButton onClick={() => AddChapter()}>Adicionar</DeleteButton>
     </h1>
     <Collapse accordion bordered={false}>
      {chapters.map(
@@ -122,12 +152,18 @@ const EditSession = () => {
        <Panel key={id} header={`capítulo ${id}`}>
         <PlayerItem>
          <PlayerInfo>
-          <PlayerInfoTitle>Texto:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>Título: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <span>{text}</span>
          </PlayerInfo>
 
          <PlayerInfo>
-          <PlayerInfoTitle>NPCs:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>NPCs: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <div>
            {npcs.length > 0 ? (
             npcs.map(({ id, name }) => (
@@ -144,7 +180,10 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
          <PlayerInfo>
-          <PlayerInfoTitle>Músicas:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>Músicas: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <div>
            {playlist.length > 0 ? (
             playlist.map(({ id, title }) => (
@@ -161,7 +200,10 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
          <PlayerInfo>
-          <PlayerInfoTitle>Monstros:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>Monstros: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <div>
            {monsters.length > 0 ? (
             monsters.map(({ id, title }) => (
@@ -180,7 +222,10 @@ const EditSession = () => {
         </PlayerItem>
         <PlayerItem>
          <PlayerInfo>
-          <PlayerInfoTitle>Desafios:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>Desafios: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <div>
            {challengers.length > 0 ? (
             challengers.map(({ id, title }) => (
@@ -199,7 +244,10 @@ const EditSession = () => {
         </PlayerItem>
         <PlayerItem>
          <PlayerInfo>
-          <PlayerInfoTitle>Itens Mágicos:</PlayerInfoTitle>
+          <PlayerInfoTitle>
+           <span>Itens Mágicos: </span>
+           <EditButton>Editar</EditButton>
+          </PlayerInfoTitle>
           <div>
            {magicItems.length > 0 ? (
             magicItems.map(({ id, title }) => (
@@ -218,11 +266,19 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
         </PlayerItem>
+        <DeleteChapterDiv>
+         <DeleteButton onClick={() => showDeleteConfirm(id)}>
+          Deletar Capítulo
+         </DeleteButton>
+        </DeleteChapterDiv>
        </Panel>
       )
      )}
     </Collapse>
    </SessionSection>
+   <DeleteChapterDiv>
+    <DeleteButton onClick={() => console.log("")}>Salvar Sessão</DeleteButton>
+   </DeleteChapterDiv>
   </Card>
  );
 };
