@@ -6,7 +6,9 @@ import MusicSelector from "../Component/MusicSelector";
 import campainList from "../mock/campainList";
 import playersList from "../mock/playersList";
 import sessionsList from "../mock/sessionList";
+import npcs from "../mock/npcs";
 import AddPlayerForm from "../Templates/AddPlayerForm";
+import AddNPCForm from "../Templates/AddNPCForm";
 
 const { Panel } = Collapse;
 
@@ -23,6 +25,7 @@ const PlayerInfo = styled.div`
  flex-direction: column;
  justify-content: flex-start;
  align-items: center;
+ word-break: break-all;
 `;
 const PlayerInfoTitle = styled.span`
  font-weight: bold;
@@ -112,10 +115,56 @@ const PlayersListItem = ({
  </PlayerItem>
 );
 
+const NPCListItem = ({
+ age,
+ raceType,
+ alignment,
+ ideal,
+ bond,
+ flaws,
+ onClick,
+ onDelete,
+}) => (
+ <>
+  <PlayerItem>
+   <PlayerInfo>
+    <PlayerInfoTitle>Idade:</PlayerInfoTitle>
+    <span>{age}</span>
+   </PlayerInfo>
+   <PlayerInfo>
+    <PlayerInfoTitle>Raça:</PlayerInfoTitle>
+    <span>{raceType}</span>
+   </PlayerInfo>
+   <PlayerInfo>
+    <PlayerInfoTitle>Alinhamento:</PlayerInfoTitle>
+    <span>{alignment}</span>
+   </PlayerInfo>
+   <PlayerInfo>
+    <PlayerInfoTitle>Ideais:</PlayerInfoTitle>
+    <span>{ideal}</span>
+   </PlayerInfo>
+   <PlayerInfo>
+    <PlayerInfoTitle>Laços:</PlayerInfoTitle>
+    <span>{bond}</span>
+   </PlayerInfo>
+   <PlayerInfo>
+    <PlayerInfoTitle>Falhas:</PlayerInfoTitle>
+    <span>{flaws}</span>
+   </PlayerInfo>
+   <div>
+    <EditButton onClick={onClick}>Editar</EditButton>
+    <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
+   </div>
+  </PlayerItem>
+ </>
+);
+
 const EditCampain = () => {
  const [campain, setCampain] = useState("");
  const [players, setPlayers] = useState(playersList);
  const [addPlayerFormVisible, setPlayerFormVisible] = useState(false);
+ const [addNPCFormVisible, setNPCFormVisible] = useState(false);
+ const [npcList, setNPCs] = useState(npcs);
  const { id } = useParams();
  const history = useHistory();
 
@@ -154,11 +203,46 @@ const EditCampain = () => {
   setPlayers(newPlayers);
   setPlayerFormVisible(false);
  };
+ const AddNPC = ({
+  id,
+  name,
+  age,
+  raceType,
+  alignment,
+  ideal,
+  bond,
+  flaw,
+  background,
+  affiliation,
+  items,
+ }) => {
+  const newNPC = {
+   id,
+   name,
+   age,
+   raceType,
+   alignment,
+   ideal,
+   bond,
+   flaw,
+   background,
+   affiliation,
+   items,
+  };
+
+  const newNPCs = [...npcList, newNPC];
+  setNPCs(newNPCs);
+  setNPCFormVisible(false);
+ };
 
  const DeletePlayer = (id) => {
   const filteredPlayers = players.filter((player) => player.id !== id);
   setPlayers(filteredPlayers);
   setPlayerFormVisible(false);
+ };
+ const DeleteNPC = (id) => {
+  const filteredNPC = npcList.filter((npc) => npc.id !== id);
+  setNPCs(filteredNPC);
  };
 
  const { title, system } = campain || {
@@ -213,6 +297,38 @@ const EditCampain = () => {
        />
       </Panel>
      ))}
+    </Collapse>
+   </CampainSection>
+   <CampainSection>
+    <h1>
+     <span>NPCs</span>
+     <DeleteButton onClick={() => setNPCFormVisible(true)}>
+      Adicinar
+     </DeleteButton>
+     <AddNPCForm
+      visible={addNPCFormVisible}
+      onClose={() => setNPCFormVisible(false)}
+      onSubmit={AddNPC}
+      onDelete={DeleteNPC}
+     />
+    </h1>
+    <Collapse accordion bordered={false}>
+     {npcList.map(
+      ({ id, name, age, raceType, alignment, ideal, bond, flaw }) => (
+       <Panel key={id} header={name}>
+        <NPCListItem
+         age={age}
+         alignment={alignment}
+         raceType={raceType}
+         ideal={ideal}
+         bond={bond}
+         flaws={flaw}
+         onClick={() => console.log()}
+         onDelete={() => DeleteNPC(id)}
+        />
+       </Panel>
+      )
+     )}
     </Collapse>
    </CampainSection>
    <CampainSection>
