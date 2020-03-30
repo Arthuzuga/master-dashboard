@@ -16,7 +16,7 @@ const Container = styled.div`
 const Home = () => {
  return (
   <Container>
-   <h1>SEJA BEM-VINDO AO MASTER DASHBOARD</h1>
+   <h1>SEJA BEM-VINDO AO DASHBOARD MASTER</h1>
    <img
     src="https://i.pinimg.com/originals/26/49/de/2649defe625da3bb301529b2d39e763b.png"
     width="128px"
