@@ -178,7 +178,7 @@ const EditSession = () => {
         <PlayerItem>
          <PlayerInfo>
           <PlayerInfoTitle>
-           <span>Título: </span>
+           <span>Descrição: </span>
            <EditButton>Editar</EditButton>
           </PlayerInfoTitle>
           <span>{text}</span>
@@ -187,7 +187,13 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>NPCs: </span>
-           <EditButton onClick={() => setNPCModalOpen(true)}>Editar</EditButton>
+           <EditButton
+            onClick={() => {
+             setNPCModalOpen(true);
+            }}
+           >
+            Editar
+           </EditButton>
            <AddNPCSessionForm
             visible={addNPCModalOpen}
             onClose={() => setNPCModalOpen(false)}

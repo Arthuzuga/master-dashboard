@@ -331,10 +331,6 @@ const EditCampain = () => {
      )}
     </Collapse>
    </CampainSection>
-   <CampainSection>
-    <h1>Música</h1>
-    <MusicSelector onMusicAdded={(c) => console.log(c)} />
-   </CampainSection>
   </Card>
  );
 };
