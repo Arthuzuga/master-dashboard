@@ -1,8 +1,8 @@
-import { DATA_EXAMPLE } from "../actions/actionsType";
+import { SAVE_EQUIPMENTS } from "../actions/actionsType";
 
 export default (state = {}, action) => {
  switch (action.type) {
-  case DATA_EXAMPLE:
+  case SAVE_EQUIPMENTS:
    return action.data;
   default:
    return state;

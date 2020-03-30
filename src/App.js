@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Layout, Menu } from "antd";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+import saveMonsters from "./redux/actions/save_monsters";
+import saveEquipment from "./redux/actions/save_equipments";
+
 import { Home, Campaigns, EditCampaign, EditSession } from "./views";
 import { Drawer } from "./Component";
 import "antd/dist/antd.css";
+import { getMonsters } from "./services/getMonsters";
+import { getEquipmentsCategory } from "./services/getEquipments";
 
 const { Content } = Layout;
 
@@ -31,8 +37,15 @@ const Wrapper = styled.div`
  margin: 2rem;
 `;
 
-const App = () => {
+const App = (props) => {
+ const { saveMonster, saveEquipmentCategory } = props;
  const [drawerVisible, setDrawerVisibility] = useState(true);
+
+ useEffect(() => {
+  getMonsters().then((res) => saveMonster(res.results));
+  getEquipmentsCategory().then((res) => saveEquipmentCategory(res.results));
+ }, [saveMonster, saveEquipmentCategory]);
+
  return (
   <Router>
    <FullHeightLayout hasSider>
@@ -71,4 +84,12 @@ const App = () => {
  );
 };
 
-export default App;
+const mapDispatchToProps = (dispatch) => {
+ return {
+  saveMonster: (monstersArray) => dispatch(saveMonsters(monstersArray)),
+  saveEquipmentCategory: (equipmentsArray) =>
+   dispatch(saveEquipment(equipmentsArray)),
+ };
+};
+
+export default connect(null, mapDispatchToProps)(App);

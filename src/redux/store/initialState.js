@@ -1,8 +1,10 @@
-import npcsList from "../../mock/npcs";
-import sessionList from "../../mock/sessionList";
+// import npcsList from "../../mock/npcs";
+// import sessionList from "../../mock/sessionList";
 
 export default {
  example: {},
- npcs: npcsList,
- sessions: sessionList,
+ monsters: [],
+ equipments: [],
+ //  npcs: npcsList,
+ //  sessions: sessionList,
 };

@@ -1,4 +1,4 @@
-import DATA_EXAMPLE from "./actionsType";
+import { DATA_EXAMPLE } from "./actionsType";
 
 const dataExample = (data) => ({
  type: DATA_EXAMPLE,
