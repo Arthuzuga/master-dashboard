@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Layout, Menu } from "antd";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { Home, Campains, EditCampain, EditSession } from "./views";
+import { Home, Campaigns, EditCampaign, EditSession } from "./views";
 import { Drawer } from "./Component";
 import "antd/dist/antd.css";
 
@@ -48,7 +48,7 @@ const App = () => {
        </Link>
       </Menu.Item>
       <Menu.Item key="2">
-       <Link to="/campains">
+       <Link to="/campaigns">
         <span className="nav-text">Campanhas</span>
        </Link>
       </Menu.Item>
@@ -59,8 +59,8 @@ const App = () => {
       <Wrapper>
        <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/campains/:id" component={EditCampain} />
-        <Route path="/campains" component={Campains} />
+        <Route path="/campaigns/:id" component={EditCampaign} />
+        <Route path="/campaigns" component={Campaigns} />
         <Route path="/sessions/newSession" component={EditSession} />
        </Switch>
       </Wrapper>

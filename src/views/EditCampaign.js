@@ -3,7 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Avatar, Collapse } from "antd";
 import MusicSelector from "../Component/MusicSelector";
-import campainList from "../mock/campainList";
+import campaignList from "../mock/campaignList";
 import playersList from "../mock/playersList";
 import sessionsList from "../mock/sessionList";
 import npcs from "../mock/npcs";
@@ -31,7 +31,7 @@ const PlayerInfoTitle = styled.span`
  font-weight: bold;
 `;
 
-const CampainSection = styled.section`
+const CampaignSection = styled.section`
  margin: 1rem 0;
  padding: 1rem 0;
  border-bottom: 1px solid #c7c7c7;
@@ -159,8 +159,8 @@ const NPCListItem = ({
  </>
 );
 
-const EditCampain = () => {
- const [campain, setCampain] = useState("");
+const EditCampaign = () => {
+ const [campaign, setCampaign] = useState("");
  const [players, setPlayers] = useState(playersList);
  const [addPlayerFormVisible, setPlayerFormVisible] = useState(false);
  const [addNPCFormVisible, setNPCFormVisible] = useState(false);
@@ -169,10 +169,10 @@ const EditCampain = () => {
  const history = useHistory();
 
  useEffect(() => {
-  const filteredCampain = campainList.filter(
-   (session) => session.url === `/campains/${id}`
+  const filteredCampaign = campaignList.filter(
+   (session) => session.url === `/campaigns/${id}`
   );
-  setCampain(filteredCampain[0]);
+  setCampaign(filteredCampaign[0]);
  }, [id]);
 
  const OpenAddPlayerForm = () => {
@@ -245,17 +245,17 @@ const EditCampain = () => {
   setNPCs(filteredNPC);
  };
 
- const { title, system } = campain || {
+ const { title, system } = campaign || {
   title: "Não existe",
   system: "Não tem",
  };
  return (
   <Card title={title} bordered={false} style={{ width: "100%" }}>
-   <CampainSection>
+   <CampaignSection>
     <h1>SISTEMA</h1>
     <span>{system}</span>
-   </CampainSection>
-   <CampainSection>
+   </CampaignSection>
+   <CampaignSection>
     <h1>
      <span>JOGADORES</span>
      <DeleteButton onClick={OpenAddPlayerForm}>Adicionar</DeleteButton>
@@ -279,8 +279,8 @@ const EditCampain = () => {
       />
      )
     )}
-   </CampainSection>
-   <CampainSection>
+   </CampaignSection>
+   <CampaignSection>
     <h1>
      <span>SESSÕES</span>
      <DeleteButton onClick={() => history.push("/sessions/newSession")}>
@@ -298,8 +298,8 @@ const EditCampain = () => {
       </Panel>
      ))}
     </Collapse>
-   </CampainSection>
-   <CampainSection>
+   </CampaignSection>
+   <CampaignSection>
     <h1>
      <span>NPCs</span>
      <DeleteButton onClick={() => setNPCFormVisible(true)}>
@@ -330,9 +330,9 @@ const EditCampain = () => {
       )
      )}
     </Collapse>
-   </CampainSection>
+   </CampaignSection>
   </Card>
  );
 };
 
-export default EditCampain;
+export default EditCampaign;

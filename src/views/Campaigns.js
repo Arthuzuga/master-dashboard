@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Modal, Input } from "antd";
 
-import campain from "../mock/campainList";
+import campain from "../mock/campaignList";
 
 const { confirm } = Modal;
 
-const CampainList = styled.div`
+const CampaignList = styled.div`
  width: 100%;
 `;
 
@@ -37,7 +37,7 @@ const DeleteButton = styled.button`
  margin-left: 1rem;
 `;
 
-const AddCampainDiv = styled.div`
+const AddCampaignDiv = styled.div`
  width: 100%;
  display: flex;
  justify-content: flex-end;
@@ -47,7 +47,7 @@ const AddCampainDiv = styled.div`
  padding-top: 1rem;
 `;
 
-const CampainListItem = ({ title, onClick, onDelete }) => (
+const CampaignListItem = ({ title, onClick, onDelete }) => (
  <Campain>
   <span>{title}</span>
   <div>
@@ -57,27 +57,28 @@ const CampainListItem = ({ title, onClick, onDelete }) => (
  </Campain>
 );
 
-const Campains = () => {
+const Campaigns = () => {
  const history = useHistory();
- const [campainList, setcampainList] = useState(campain);
- const [createcampain, setCreatecampain] = useState(false);
+ const [campaignList, setcampaignList] = useState(campain);
+ const [createcampaign, setCreatecampaign] = useState(false);
  const [inputTitle, setinputTitle] = useState("");
  const [inputSystem, setinputSystem] = useState("");
 
- const Deletecampain = (url) => {
-  console.log();
-  const filteredcampain = campainList.filter((campain) => campain.url !== url);
-  setcampainList(filteredcampain);
+ const Deletecampaign = (url) => {
+  const filteredcampaign = campaignList.filter(
+   (campain) => campain.url !== url
+  );
+  setcampaignList(filteredcampaign);
  };
- const Addcampain = (title, system, url) => {
-  const newcampain = {
+ const Addcampaign = (title, system, url) => {
+  const newcampaign = {
    title,
    url,
    system,
   };
-  const newcampains = [...campainList, newcampain];
-  setcampainList(newcampains);
-  setCreatecampain(false);
+  const newcampaigns = [...campaignList, newcampaign];
+  setcampaignList(newcampaigns);
+  setCreatecampaign(false);
  };
 
  const showDeleteConfirm = (url) =>
@@ -89,31 +90,31 @@ const Campains = () => {
    content:
     "Apagando essa sessão não será possível recuperar seus dados depois",
    onOk() {
-    Deletecampain(url);
+    Deletecampaign(url);
    },
   });
 
  return (
   <>
    <Card title="Campanhas" bordered={false} style={{ width: "100%" }}>
-    <CampainList>
-     {campainList.map(({ title, url }) => (
-      <CampainListItem
+    <CampaignList>
+     {campaignList.map(({ title, url }) => (
+      <CampaignListItem
        key={url}
        title={title}
        onClick={() => history.push(url)}
        onDelete={() => showDeleteConfirm(url)}
       />
      ))}
-    </CampainList>
-    <AddCampainDiv>
-     <EditButton onClick={() => setCreatecampain(true)}>
+    </CampaignList>
+    <AddCampaignDiv>
+     <EditButton onClick={() => setCreatecampaign(true)}>
       Criar Campanha
      </EditButton>
-    </AddCampainDiv>
+    </AddCampaignDiv>
    </Card>
 
-   {createcampain && (
+   {createcampaign && (
     <Card
      title="Criar Campanha"
      bordered={false}
@@ -133,27 +134,27 @@ const Campains = () => {
        if (e.keyCode === 13) {
         const lowerTitle = inputTitle.toLowerCase();
         const url = lowerTitle.replace(" ", "");
-        Addcampain(inputTitle, inputSystem, `/campain/${url}`);
+        Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
        }
       }}
      />
 
-     <AddCampainDiv>
-      <EditButton onClick={() => setCreatecampain(false)}>Cancelar</EditButton>
+     <AddCampaignDiv>
+      <EditButton onClick={() => setCreatecampaign(false)}>Cancelar</EditButton>
       <DeleteButton
        onClick={() => {
         const lowerTitle = inputTitle.toLowerCase();
         const url = lowerTitle.replace(" ", "");
-        Addcampain(inputTitle, inputSystem, `/campain/${url}`);
+        Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
        }}
       >
        Adicionar Conta
       </DeleteButton>
-     </AddCampainDiv>
+     </AddCampaignDiv>
     </Card>
    )}
   </>
  );
 };
 
-export default Campains;
+export default Campaigns;
