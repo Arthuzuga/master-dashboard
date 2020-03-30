@@ -11,6 +11,14 @@ const CampaignList = styled.div`
  width: 100%;
 `;
 
+const Campaign = styled.div`
+ margin: 1rem 0;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-size: 16px;
+`;
+
 const EditButton = styled.button`
  border: 1px solid #767676;
  border-radius: 8px;
@@ -40,13 +48,13 @@ const AddCampaignDiv = styled.div`
 `;
 
 const CampaignListItem = ({ title, onClick, onDelete }) => (
- <campaign>
+ <Campaign>
   <span>{title}</span>
   <div>
    <EditButton onClick={onClick}>Editar</EditButton>
    <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
   </div>
- </campaign>
+ </Campaign>
 );
 
 const Campaigns = () => {
