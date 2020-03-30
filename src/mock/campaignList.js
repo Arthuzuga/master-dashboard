@@ -1,29 +1,29 @@
-const campains = [
+const campaigns = [
  {
   title: "Crônicas de Belat'nor",
-  url: "/campains/cronicasBelatnor",
+  url: "/campaigns/cronicasBelatnor",
   system: "Dungeons and Dragons",
  },
  {
   title: "Mares de Sal e Sangue",
-  url: "/campains/maresDeSalESangue",
+  url: "/campaigns/maresDeSalESangue",
   system: "Dungeons and Dragons",
  },
  {
   title: "Sombras da Guerra",
-  url: "/campains/sombrasDaGuerra",
+  url: "/campaigns/sombrasDaGuerra",
   system: "Dungeons and Dragons",
  },
  {
   title: "Águas Passadas",
-  url: "/campains/aguasPassadas",
+  url: "/campaigns/aguasPassadas",
   system: "Dungeons and Dragons",
  },
  {
   title: "A Ordem Paranormal",
-  url: "/campains/ordemParanormal",
+  url: "/campaigns/ordemParanormal",
   system: "The Exoterrorism",
  },
 ];
 
-export default campains;
+export default campaigns;

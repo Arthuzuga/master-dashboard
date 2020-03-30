@@ -3,20 +3,12 @@ import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Modal, Input } from "antd";
 
-import campain from "../mock/campaignList";
+import campaign from "../mock/campaignList";
 
 const { confirm } = Modal;
 
 const CampaignList = styled.div`
  width: 100%;
-`;
-
-const Campain = styled.div`
- margin: 1rem 0;
- display: flex;
- justify-content: space-between;
- align-items: center;
- font-size: 16px;
 `;
 
 const EditButton = styled.button`
@@ -48,25 +40,25 @@ const AddCampaignDiv = styled.div`
 `;
 
 const CampaignListItem = ({ title, onClick, onDelete }) => (
- <Campain>
+ <campaign>
   <span>{title}</span>
   <div>
    <EditButton onClick={onClick}>Editar</EditButton>
    <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
   </div>
- </Campain>
+ </campaign>
 );
 
 const Campaigns = () => {
  const history = useHistory();
- const [campaignList, setcampaignList] = useState(campain);
+ const [campaignList, setcampaignList] = useState(campaign);
  const [createcampaign, setCreatecampaign] = useState(false);
  const [inputTitle, setinputTitle] = useState("");
  const [inputSystem, setinputSystem] = useState("");
 
  const Deletecampaign = (url) => {
   const filteredcampaign = campaignList.filter(
-   (campain) => campain.url !== url
+   (campaign) => campaign.url !== url
   );
   setcampaignList(filteredcampaign);
  };

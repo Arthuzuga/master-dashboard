@@ -83,7 +83,7 @@ const DeleteChapterDiv = styled.div`
 `;
 
 const EditSession = () => {
- const [id, setId] = useState("");
+ //  const [id, setId] = useState("");
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
@@ -95,7 +95,6 @@ const EditSession = () => {
  //  const [magicItems, setMagicItems] = useState([]);
 
  useEffect(() => {
-  setId((Math.random() * 100).toFixed(0));
   const chapterList = sessionList[0].chapters;
   setChapters(chapterList);
  }, []);
