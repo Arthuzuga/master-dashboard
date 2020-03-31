@@ -4,6 +4,7 @@ import { Card, Input, Collapse, Modal } from "antd";
 import sessionList from "../mock/sessionList";
 import AddMusicForm from "../Templates/AddMusicForm";
 import AddNPCSessionForm from "../Templates/AddNPCSessionForm";
+import AddMonstersForm from "../Templates/AddMonstersForm";
 
 const mockChapter = {
  id: (Math.random() * 1000).toFixed(0),
@@ -89,8 +90,8 @@ const EditSession = () => {
  const [chapters, setChapters] = useState([]);
  const [addMusicModalOpen, setMusicModalOpen] = useState(false);
  const [addNPCModalOpen, setNPCModalOpen] = useState(false);
+ const [addMonstersOpen, setMonstersOpen] = useState(false);
  //  const [npcs, setNPCs] = useState([]);
- //  const [monsters, setMonsters] = useState([]);
  //  const [challengers, setChallengers] = useState([]);
  //  const [magicItems, setMagicItems] = useState([]);
 
@@ -117,6 +118,15 @@ const EditSession = () => {
   const newChapter = {
    ...chapters[index],
    npcs: npc,
+  };
+  chapters.splice(index, 1);
+  const newChapters = [...chapters, newChapter];
+  setChapters(newChapters);
+ };
+ const setMonsters = (monster, index) => {
+  const newChapter = {
+   ...chapters[index],
+   monsters: monster,
   };
   chapters.splice(index, 1);
   const newChapters = [...chapters, newChapter];
@@ -252,14 +262,24 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>Monstros: </span>
-           <EditButton>Editar</EditButton>
+           <EditButton onClick={() => setMonstersOpen(true)}>Editar</EditButton>
+           <AddMonstersForm
+            visible={addMonstersOpen}
+            onClose={() => setMonstersOpen(false)}
+            onSubmit={(e) => {
+             const newMonsters = [...monsters, e];
+             setMonsters(newMonsters, indexChapter);
+             setMonstersOpen(false);
+            }}
+           />
           </PlayerInfoTitle>
           <div>
            {monsters.length > 0 ? (
-            monsters.map(({ id, title }) => (
-             <div key={id} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Título:</PlayerInfoTitle>
-              <span> {title}</span>
+            monsters.map(({ index, name, quantity }) => (
+             <div key={index} style={{ margin: "1rem 0" }}>
+              <PlayerInfoTitle>Nome:</PlayerInfoTitle>
+              <span> {name}</span>
+              <span> x{quantity}</span>
              </div>
             ))
            ) : (
