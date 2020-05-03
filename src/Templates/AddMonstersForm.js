@@ -87,8 +87,8 @@ const AddMonstersForm = ({
  }, [monsterList]);
 
  const onSumbitMonster = () => {
-  //   console.log(monsterSelected);
   onSubmit(monsterSelected);
+  setMonster("");
  };
 
  const getMonsterData = async (monster) => {
