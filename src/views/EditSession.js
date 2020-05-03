@@ -5,6 +5,7 @@ import sessionList from "../mock/sessionList";
 import AddMusicForm from "../Templates/AddMusicForm";
 import AddNPCSessionForm from "../Templates/AddNPCSessionForm";
 import AddMonstersForm from "../Templates/AddMonstersForm";
+import AddChallengeForm from "../Templates/AddChallengeForm";
 
 const mockChapter = {
  id: (Math.random() * 1000).toFixed(0),
@@ -91,8 +92,9 @@ const EditSession = () => {
  const [addMusicModalOpen, setMusicModalOpen] = useState(false);
  const [addNPCModalOpen, setNPCModalOpen] = useState(false);
  const [addMonstersOpen, setMonstersOpen] = useState(false);
+ const [addChallengeModalOpen, setChallengeModalOpen] = useState(false);
  //  const [npcs, setNPCs] = useState([]);
- //  const [challengers, setChallengers] = useState([]);
+//   const [challengers, setChallengers] = useState([]);
  //  const [magicItems, setMagicItems] = useState([]);
 
  useEffect(() => {
@@ -109,6 +111,15 @@ const EditSession = () => {
   const newChapter = {
    ...chapters[index],
    playlist: songs,
+  };
+  chapters.splice(index, 1);
+  const newChapters = [...chapters, newChapter];
+  setChapters(newChapters);
+ };
+ const setChallenges = (challenge, index) => {
+  const newChapter = {
+   ...chapters[index],
+   challenge,
   };
   chapters.splice(index, 1);
   const newChapters = [...chapters, newChapter];
@@ -290,18 +301,35 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
         </PlayerItem>
+
         <PlayerItem>
          <PlayerInfo>
+        <AddChallengeForm 
+            visible={addChallengeModalOpen}
+            onClose={() => setChallengeModalOpen(false)}
+            onSubmit={(challenge) => {
+            setChallenges(challenge, indexChapter);
+            setChallengeModalOpen(false);
+            }}
+            challengesDefault={challengers}
+
+        />
           <PlayerInfoTitle>
            <span>Desafios: </span>
-           <EditButton>Editar</EditButton>
+           <EditButton onClick={() => setChallengeModalOpen(true)} >Editar</EditButton>
           </PlayerInfoTitle>
           <div>
            {challengers.length > 0 ? (
-            challengers.map(({ id, title }) => (
-             <div key={id} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Título:</PlayerInfoTitle>
-              <span> {title}</span>
+            challengers.map(({ id, title, dc }) => (
+             <div key={id} style={{ margin: "1rem 0", display: 'flex', flexDirection: "row", justifyContent: 'space-between' }}>
+                <div>   
+                    <PlayerInfoTitle>Título:</PlayerInfoTitle>
+                    <span> {title}</span>
+                </div>
+                <div> 
+                    <PlayerInfoTitle>Dificuldade:</PlayerInfoTitle>
+                    <span> {dc}</span>
+                </div>
              </div>
             ))
            ) : (
@@ -312,6 +340,7 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
         </PlayerItem>
+
         <PlayerItem>
          <PlayerInfo>
           <PlayerInfoTitle>
