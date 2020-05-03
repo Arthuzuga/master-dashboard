@@ -1,0 +1,28 @@
+const skillList = [
+    "Atletismo",
+    "Acrobacia",
+    "Lidar com Animais",
+    "Arcanismo",
+    "Atuação",
+    "Blefar",
+    "Furtividade",
+    "História",
+    "Intimidação",
+    "Intuição",
+    "Investigação",
+    "Medicina",
+    "Natureza",
+    "Percepção",
+    "Persuasão",
+    "Presdigitação",
+    "Religião",
+    "Sobrevivência",
+    "Força",
+    "Destreza",
+    "Constituição",
+    "Inteligência",
+    "Sabedoria",
+    "Carisma",
+];
+
+export default skillList;
