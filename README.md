@@ -16,4 +16,22 @@ You will also see any lint errors in the console.
 
 ### Deployment
 
-Enjoy it on: [https://5e80d57dccd9c74131763f99--jovial-galileo-20c616.netlify.com/](https://5e80d57dccd9c74131763f99--jovial-galileo-20c616.netlify.com/)
+Enjoy it on: [https://jovial-galileo-20c616.netlify.com/](https://jovial-galileo-20c616.netlify.com/)
+
+### Features
+- [x] Campaign's List
+- [x] Add/Edit Campaign's Page
+- [x] Session's List
+- [ ] Add/Edit Session's Page
+- [ ] Add/Edit General Info
+- [ ] Add/Edit Description
+- [ ] Chapter's List
+- [ ] Add/Edit Chapter
+- [ ] Add/Edit Chapter's info
+- [x] List NPC
+- [x] Add/Edit NPC
+- [x] List Monster
+- [x] Add/Remove Moster
+- [x] List Challengers
+- [ ] Add/Edit Challengers
+- [ ] List Items   
