@@ -1,4 +1,5 @@
 import npcs from "./npcs";
+import challengeList from './challengeList'
 import playlist from "./playlist";
 
 const sessions = [
@@ -16,7 +17,7 @@ const sessions = [
      .flatMap((music) => music.songs),
     npcs: npcs,
     magicItems: [],
-    challengers: [],
+    challengers: challengeList,
     monsters: [],
    },
    {
