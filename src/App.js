@@ -67,6 +67,11 @@ const App = (props) => {
         <span className="nav-text">Campanhas</span>
        </Link>
       </Menu.Item>
+      <Menu.Item key="3">
+       <Link to="/teste">
+        <span className="nav-text">Teste de Feature</span>
+       </Link>
+      </Menu.Item>
      </Menu>
     </Drawer>
     <Layout>
