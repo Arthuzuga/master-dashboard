@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Modal, Input } from "antd";
+import { Button } from '../Component'
+import { EditAndDelete } from '../Containers'
 
 import campaign from "../mock/campaignList";
 
@@ -19,24 +21,6 @@ const Campaign = styled.div`
  font-size: 16px;
 `;
 
-const EditButton = styled.button`
- border: 1px solid #767676;
- border-radius: 8px;
- background-color: #373737;
- color: white;
- font-weight: 400;
- cursor: pointer;
-`;
-const DeleteButton = styled.button`
- border: none;
- border-radius: 8px;
- background-color: #b21f66;
- color: white;
- font-weight: 400;
- cursor: pointer;
- margin-left: 1rem;
-`;
-
 const AddCampaignDiv = styled.div`
  width: 100%;
  display: flex;
@@ -50,10 +34,7 @@ const AddCampaignDiv = styled.div`
 const CampaignListItem = ({ title, onClick, onDelete }) => (
  <Campaign>
   <span>{title}</span>
-  <div>
-   <EditButton onClick={onClick}>Editar</EditButton>
-   <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
-  </div>
+  <EditAndDelete onEdit={onClick} onDelete={onDelete}/>
  </Campaign>
 );
 
@@ -83,7 +64,7 @@ const Campaigns = () => {
 
  const showDeleteConfirm = (url) =>
   confirm({
-   title: "Tem certeza em apagar essa sessão?",
+   title:  "Tem certeza em apagar essa sessão?",
    okText: "Apagar",
    okType: "danger",
    cancelText: "Cancelar",
@@ -93,6 +74,10 @@ const Campaigns = () => {
     Deletecampaign(url);
    },
   });
+
+  const createSlug = (title) => {
+    return title.toLowerCase().replace(" ", "");
+  }
 
  return (
   <>
@@ -108,9 +93,13 @@ const Campaigns = () => {
      ))}
     </CampaignList>
     <AddCampaignDiv>
-     <EditButton onClick={() => setCreatecampaign(true)}>
+     <Button 
+        backgroundColor="#373737" 
+        textColor="white"
+        onClick={() => setCreatecampaign(true)}
+    >
       Criar Campanha
-     </EditButton>
+     </Button>
     </AddCampaignDiv>
    </Card>
 
@@ -132,24 +121,30 @@ const Campaigns = () => {
       onChange={(e) => setinputSystem(e.target.value)}
       onKeyUp={(e) => {
        if (e.keyCode === 13) {
-        const lowerTitle = inputTitle.toLowerCase();
-        const url = lowerTitle.replace(" ", "");
+        const url = createSlug(inputTitle);
         Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
        }
       }}
      />
 
      <AddCampaignDiv>
-      <EditButton onClick={() => setCreatecampaign(false)}>Cancelar</EditButton>
-      <DeleteButton
+      <Button 
+        backgroundColor="#373737" 
+        textColor="white" 
+        onClick={() => setCreatecampaign(false)}
+      >
+        Cancelar
+      </Button>
+      <Button 
+      backgroundColor="#b21f66" 
+      textColor="white" 
        onClick={() => {
-        const lowerTitle = inputTitle.toLowerCase();
-        const url = lowerTitle.replace(" ", "");
+        const url = createSlug(inputTitle);
         Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
        }}
       >
        Adicionar Conta
-      </DeleteButton>
+      </Button>
      </AddCampaignDiv>
     </Card>
    )}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Drawer, Button, Empty } from "antd";
-import { MusicSelector } from "../Component";
+import { MusicSelector } from "../../Containers";
 
 const Footer = styled.div`
  text-align: right;

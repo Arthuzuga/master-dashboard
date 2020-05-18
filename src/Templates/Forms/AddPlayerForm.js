@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Drawer, Button, Input, Select } from "antd";
-import racetypes from "../mock/raceTypes";
-import classestype from "../mock/classType";
+import racetypes from "../../mock/raceTypes";
+import classestype from "../../mock/classType";
 
 const Footer = styled.div`
  text-align: right;

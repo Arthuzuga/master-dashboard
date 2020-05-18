@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { Drawer, Button, Empty, Select } from "antd";
-import npcsMocks from "../mock/npcs";
+import npcsMocks from "../../mock/npcs";
 
 const { Option } = Select;
 

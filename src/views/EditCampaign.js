@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Card, Avatar, Collapse } from "antd";
-import campaignList from "../mock/campaignList";
-import playersList from "../mock/playersList";
-import sessionsList from "../mock/sessionList";
-import npcs from "../mock/npcs";
-import AddPlayerForm from "../Templates/AddPlayerForm";
-import AddNPCForm from "../Templates/AddNPCForm";
+
+import { Button } from "../Component";
+import { EditAndDelete } from "../Containers";
+import { AddPlayerForm, AddNPCForm} from "../Templates";
+
+import { campaignList, playersList, sessionList, npcs } from '../mock'
 
 const { Panel } = Collapse;
 
@@ -44,14 +44,6 @@ const SessionItem = styled.div`
  padding: 1rem 0.5rem;
 `;
 
-const EditButton = styled.button`
- border: 1px solid #767676;
- border-radius: 8px;
- background-color: #373737;
- color: white;
- font-weight: 400;
- cursor: pointer;
-`;
 const DeleteButton = styled.button`
  border: none;
  border-radius: 8px;
@@ -72,10 +64,7 @@ const AvatarWrapper = styled.div`
 const SessionsListItem = ({ title, onClick, onDelete }) => (
  <SessionItem>
   <span>{title}</span>
-  <div>
-   <EditButton onClick={onClick}>Editar</EditButton>
-   <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
-  </div>
+  <EditAndDelete onEdit={onClick} onDelete={onDelete}/>
  </SessionItem>
 );
 
@@ -150,10 +139,7 @@ const NPCListItem = ({
     <PlayerInfoTitle>Falhas:</PlayerInfoTitle>
     <span>{flaws}</span>
    </PlayerInfo>
-   <div>
-    <EditButton onClick={onClick}>Editar</EditButton>
-    <DeleteButton onClick={onDelete}>Apagar</DeleteButton>
-   </div>
+   <EditAndDelete onEdit={onClick} onDelete={onDelete}/>
   </PlayerItem>
  </>
 );
@@ -202,6 +188,7 @@ const EditCampaign = () => {
   setPlayers(newPlayers);
   setPlayerFormVisible(false);
  };
+
  const AddNPC = ({
   id,
   name,
@@ -239,6 +226,7 @@ const EditCampaign = () => {
   setPlayers(filteredPlayers);
   setPlayerFormVisible(false);
  };
+ 
  const DeleteNPC = (id) => {
   const filteredNPC = npcList.filter((npc) => npc.id !== id);
   setNPCs(filteredNPC);
@@ -257,7 +245,13 @@ const EditCampaign = () => {
    <CampaignSection>
     <h1>
      <span>JOGADORES</span>
-     <DeleteButton onClick={OpenAddPlayerForm}>Adicionar</DeleteButton>
+     <Button
+      backgroundColor= "#b21f66"
+      textColor="white"
+      onClick={OpenAddPlayerForm}
+      >
+        Adicionar
+      </Button>
      <AddPlayerForm
       visible={addPlayerFormVisible}
       onClose={() => setPlayerFormVisible(false)}
@@ -287,7 +281,7 @@ const EditCampaign = () => {
      </DeleteButton>
     </h1>
     <Collapse accordion bordered={false}>
-     {sessionsList.map(({ title, description, id }) => (
+     {sessionList.map(({ title, description, id }) => (
       <Panel key={id} header={title}>
        <SessionsListItem
         title={`${description} da sessão ${title}`}

@@ -1,31 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
-import styled from "styled-components";
-import { Drawer, Button, Empty, Spin, InputNumber } from "antd";
-import { getMonsterInfo } from "../services/getMonsters";
-import { modifiers } from "../helpers/functions";
+import React from 'react'
+import styled from 'styled-components'
+import { InputNumber } from "antd";
 
-const Footer = styled.div`
- text-align: right;
-`;
 
-const FormStyle = styled.div`
- display: flex;
- flex-direction: row;
- flex-wrap: wrap;
- justify-content: space-between;
- align-items: center;
-`;
-
-const MonsterListItem = styled.span`
- width: 30%;
- background-color: gainsboro;
- border-radius: 8px;
- padding: 1rem;
- text-align: center;
- margin: 0.5rem 0;
- cursor: pointer;
-`;
+import { modifiers } from "../../helpers/functions";
 
 const MonsterSheet = styled.div`
  background-color: #fffebd;
@@ -71,106 +49,9 @@ const MonsterStatsRow = styled.div`
  justify-content: space-between;
 `;
 
-const AddMonstersForm = ({
- onSubmit,
- onClose,
- visible = true,
- monsterList,
-}) => {
- const [monsterSelected, setMonsterSelected] = useState("");
- const [monster, setMonster] = useState("");
- const [monsters, setMonsters] = useState([]);
- const [step, setStep] = useState(0);
-
- useEffect(() => {
-  setMonsters(monsterList);
- }, [monsterList]);
-
- const onSumbitMonster = () => {
-  onSubmit(monsterSelected);
-  setMonster("");
- };
-
- const getMonsterData = async (monster) => {
-  const { index, name, url } = monster;
-  const res = await getMonsterInfo(url);
-  setMonster(res);
-  setMonsterSelected({
-   index,
-   name,
-   url,
-   quantity: 1,
-  });
- };
-
- return (
-  <Drawer
-   title="Adicionar monstros"
-   onClose={onClose}
-   width={720}
-   bodyStyle={{ paddingBottom: 80 }}
-   visible={visible}
-   footer={
-    <Footer>
-     <Button onClick={onClose} style={{ marginRight: 8 }}>
-      Cancelar
-     </Button>
-     <Button
-      onClick={onSumbitMonster}
-      type="primary"
-      disabled={monsterSelected.index !== undefined ? false : true}
-     >
-      Adicionar
-     </Button>
-    </Footer>
-   }
-  >
-   <FormStyle>
-    {monsters.length === 0 ? (
-     <Spin />
-    ) : (
-     monsters.slice(15 * step, 15 * (step + 1)).map((monster) => (
-      <MonsterListItem
-       key={monster.index}
-       onClick={() => getMonsterData(monster)}
-      >
-       {monster.name}
-      </MonsterListItem>
-     ))
-    )}
-    <div
-     style={{
-      width: "100%",
-      display: "flex",
-      justifyContent: "space-between",
-      flexDirection: "row",
-     }}
-    >
-     <Button
-      onClick={() => {
-       if (step > 0) {
-        const value = step - 1;
-        setStep(value);
-       }
-      }}
-     >
-      menos
-     </Button>
-     <span>{step + 1}</span>
-     <Button
-      onClick={() => {
-       if (step < 21) {
-        const value = step + 1;
-        setStep(value);
-       }
-      }}
-     >
-      mais
-     </Button>
-    </div>
-
-    {monster !== "" ? (
-     <MonsterSheet>
+const Monsters = ({monster, onQuantityChange}) => {
+  return (
+    <MonsterSheet>
       <MonsterSheetSession>
        <MonsterName>{monster.name}</MonsterName>
        <span>
@@ -289,28 +170,12 @@ const AddMonstersForm = ({
       <MonsterSheetSession>
        <h3>Quantidade</h3>
        <InputNumber
-        onChange={(e) => {
-         setMonsterSelected({
-          ...monsterSelected,
-          quantity: e,
-         });
-        }}
+        onChange={onQuantityChange}
         min={1}
        />
       </MonsterSheetSession>
      </MonsterSheet>
-    ) : (
-     <div style={{ width: "100%" }}>
-      <Empty />
-     </div>
-    )}
-   </FormStyle>
-  </Drawer>
- );
-};
+  )
+}
 
-const mapStateToProps = (state) => ({
- monsterList: state.monsters,
-});
-
-export default connect(mapStateToProps)(AddMonstersForm);
+export default Monsters

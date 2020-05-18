@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Input, Collapse, Modal } from "antd";
-import sessionList from "../mock/sessionList";
-import AddMusicForm from "../Templates/AddMusicForm";
-import AddNPCSessionForm from "../Templates/AddNPCSessionForm";
-import AddMonstersForm from "../Templates/AddMonstersForm";
-import AddChallengeForm from "../Templates/AddChallengeForm";
+import { sessionList } from "../mock";
+import { Button } from "../Component"
+import { AddMusicForm, AddNPCSessionForm, AddChallengeForm, MonstersInfo} from "../Templates";
 
 const mockChapter = {
  id: (Math.random() * 1000).toFixed(0),
@@ -33,15 +31,6 @@ const SessionInfo = styled.h2`
  font-size: 14px;
 `;
 
-const EditButton = styled.button`
- border: 1px solid #767676;
- border-radius: 8px;
- background-color: #373737;
- color: white;
- font-weight: 400;
- cursor: pointer;
- margin-left: 1rem;
-`;
 const DeleteButton = styled.button`
  border: none;
  border-radius: 8px;
@@ -199,7 +188,13 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>Descrição: </span>
-           <EditButton>Editar</EditButton>
+           <Button
+            backgroundColor="#373737" 
+            textColor="white"
+            disable
+            >
+             Editar
+            </Button>
           </PlayerInfoTitle>
           <span>{text}</span>
          </PlayerInfo>
@@ -207,13 +202,15 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>NPCs: </span>
-           <EditButton
+           <Button
+            backgroundColor="#373737" 
+            textColor="white"
             onClick={() => {
              setNPCModalOpen(true);
             }}
            >
             Editar
-           </EditButton>
+           </Button>
            <AddNPCSessionForm
             visible={addNPCModalOpen}
             onClose={() => setNPCModalOpen(false)}
@@ -242,9 +239,13 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>Músicas: </span>
-           <EditButton onClick={() => setMusicModalOpen(true)}>
-            Editar
-           </EditButton>
+           <Button
+            backgroundColor="#373737" 
+            textColor="white" 
+            onClick={() => setMusicModalOpen(true)}
+            >
+                Editar
+           </Button>
            <AddMusicForm
             visible={addMusicModalOpen}
             onClose={() => setMusicModalOpen(false)}
@@ -271,34 +272,18 @@ const EditSession = () => {
           </div>
          </PlayerInfo>
          <PlayerInfo>
-          <PlayerInfoTitle>
-           <span>Monstros: </span>
-           <EditButton onClick={() => setMonstersOpen(true)}>Editar</EditButton>
-           <AddMonstersForm
-            visible={addMonstersOpen}
-            onClose={() => setMonstersOpen(false)}
-            onSubmit={(e) => {
-             const newMonsters = [...monsters, e];
-             setMonsters(newMonsters, indexChapter);
-             setMonstersOpen(false);
-            }}
-           />
-          </PlayerInfoTitle>
-          <div>
-           {monsters.length > 0 ? (
-            monsters.map(({ index, name, quantity }) => (
-             <div key={index} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Nome:</PlayerInfoTitle>
-              <span> {name}</span>
-              <span> x{quantity}</span>
-             </div>
-            ))
-           ) : (
-            <div style={{ margin: "1rem 0" }}>
-             <PlayerInfoTitle>Não há monstros selecionados</PlayerInfoTitle>
-            </div>
-           )}
-          </div>
+            <MonstersInfo 
+                monsters={monsters}
+                indexChapter={indexChapter}
+                onEdit={() => setMonstersOpen(true)}
+                onModalClose={() => setMonstersOpen(false)}
+                isModalOpen={addMonstersOpen}
+                onSubmitForm={(e) => {
+                    const newMonsters = [...monsters, e];
+                    setMonsters(newMonsters, indexChapter);
+                    setMonstersOpen(false);
+                }}
+            />
          </PlayerInfo>
         </PlayerItem>
 
@@ -316,7 +301,9 @@ const EditSession = () => {
         />
           <PlayerInfoTitle>
            <span>Desafios: </span>
-           <EditButton onClick={() => setChallengeModalOpen(true)} >Editar</EditButton>
+           <Button
+            backgroundColor="#373737" 
+            textColor="white" onClick={() => setChallengeModalOpen(true)} >Editar</Button>
           </PlayerInfoTitle>
           <div>
            {challengers.length > 0 ? (
@@ -345,7 +332,9 @@ const EditSession = () => {
          <PlayerInfo>
           <PlayerInfoTitle>
            <span>Itens Mágicos: </span>
-           <EditButton>Editar</EditButton>
+           <Button
+            backgroundColor="#373737" 
+            textColor="white">Editar</Button>
           </PlayerInfoTitle>
           <div>
            {magicItems.length > 0 ? (
