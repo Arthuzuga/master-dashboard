@@ -15,3 +15,20 @@ export const modifiers = (value) => {
 
   return `${value} (${mod})`
 }
+export const modifiersOnSheet = (value) => {
+  let mod = Number(value) - 10;
+
+  if(mod % 2 === 0){
+    mod = mod/2
+  } else {
+    mod = (mod-1)/2
+  }
+
+  if(isNaN(mod)){
+    mod = ""
+  } else if (mod >=0) {
+    mod = "+" + mod
+  }
+
+  return mod
+}
