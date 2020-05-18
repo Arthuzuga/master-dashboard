@@ -90,7 +90,7 @@ form.charsheet label {
 form.charsheet header {
   display: -webkit-box;
   display: flex;
-  align-contents: stretch;
+  align-content: stretch;
   -webkit-box-align: stretch;
           align-items: stretch;
 }
