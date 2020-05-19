@@ -7,4 +7,11 @@ export default {
  equipments: [],
  //  npcs: npcsList,
  sessions: sessionList,
+ playerInfo:{
+  characterName: '',
+  playerName: '',
+  classType: '',
+  raceType: '',
+  level: 1,
+ }
 };

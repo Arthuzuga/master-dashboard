@@ -2,3 +2,4 @@ export const DATA_EXAMPLE = "DATA_EXAMPLE";
 export const SAVE_MONSTERS = "SAVE_MONSTERS";
 export const SAVE_EQUIPMENTS = "SAVE_EQUIPMENTS";
 export const SAVE_SESSIONS = "SAVE_SESSIONS";
+export const SAVE_PLAYER = "SAVE_PLAYER";

@@ -1,12 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import "./style.css"
 import { modifiersOnSheet } from '../../helpers/functions'
+import { useSelector } from 'react-redux'
 
 const Character = () => {
-  // Character Level
+  const playerInfo = useSelector(state => state.playerInfo)
+
+  // Character Infos
+  const [characterName, setCharacterName] = useState("")
+  const [playerName, setPlayerName] = useState("")
+  const [classType, setClassType] = useState("")
+  const [raceType, setRaceType] = useState("")
   const [level, setLevel] = useState(0)
+  const [classAndLevel, setClassAndLevel] = useState("")
   // Hit Dice
-  // const [hitDice, setHitDice] = useState('d10')
+  const [hitDice, setHitDice] = useState('d10')
 
   // modifiers
   const [str, setStr] = useState("")
@@ -46,6 +54,89 @@ const Character = () => {
   const [stealth, setStealth] = useState(false)
   const [survival, setSurvival] = useState(false)
 
+  useEffect(() => {
+    if (playerInfo.characterName !== ""){
+      setCharacterName(playerInfo.characterName)
+      setPlayerName(playerInfo.playerName)
+      setClassType(playerInfo.classType)
+      setRaceType(playerInfo.raceType)
+      setLevel(playerInfo.level)
+      setClassAndLevel(`${playerInfo.classType} ${playerInfo.level}`)
+    }
+  }, [playerInfo])
+
+  const charactersInfoByClass = useCallback( (classes) => {
+    switch (classes) {
+      case  "Barbaro": 
+        setStrST(true)
+        setConST(true)
+        setHitDice('d12')
+        break;
+      case "Bardo":
+        setDexST(true)
+        setChaST(true)
+        setHitDice('d8')
+        break;
+      case "Clérigo":
+        setWisST(true)
+        setChaST(true)
+        setHitDice('d8')
+        break;
+      case "Druida":
+        setIntST(true)
+        setWisST(true)
+        setHitDice('d8')
+        break;
+      case "Fighter":
+        setStrST(true)
+        setConST(true)
+        setHitDice('d10')
+        break;
+      case "Monge":
+        setStrST(true)
+        setDexST(true)
+        setHitDice('d8')
+        break;
+      case "Paladino":
+        setWisST(true)
+        setChaST(true)
+        setHitDice('d10')
+        break;
+      case "Ranger":
+        setStrST(true)
+        setDexST(true)
+        setHitDice('d10')
+        break;
+      case "Rogue":
+        setDexST(true)
+        setIntST(true)
+        setHitDice('d8')
+        break;
+      case "Warlock":
+        setWisST(true)
+        setChaST(true)
+        setHitDice('d8')
+        break;
+      case "Mago":
+        setIntST(true)
+        setWisST(true)
+        setHitDice('d6')
+        break;
+      default:
+        break;
+    }
+  },[])
+
+  useEffect(() => {
+    setStrST(false)
+    setDexST(false)
+    setConST(false)
+    setWisST(false)
+    setIntST(false)
+    setChaST(false)
+    charactersInfoByClass(classType)
+  }, [classType, charactersInfoByClass])
+
   const modifierOnString = (value) => {
     if (Number(value) > 0){
       return `+${value}`
@@ -64,6 +155,11 @@ const Character = () => {
     const levelRgx = value.replace(/[a-zA-Z]/g, "")
     setLevel(Number(levelRgx))
   }
+  const getClass = (value) => {
+    const classRgx = value.replace(/\s[0-9]/g, "")
+    setClassType((classRgx))
+
+  }
 
   return (
     <div>
@@ -71,13 +167,17 @@ const Character = () => {
         <header>
           <section class="charname">
             <label for="charname">Character Name</label>
-            <input name="charname" placeholder="Thoradin Fireforge" />
+            <input name="charname" placeholder="Thoradin Fireforge" value={characterName} onChange={({target:{value}}) => setCharacterName(value)}/>
           </section>
           <section class="misc">
             <ul>
               <li>
                 <label for="classlevel">Class and Level</label>
-                <input name="classlevel" placeholder="Paladin 2" onChange={({target:{value}}) => getLevel(value)}/>
+                <input name="classlevel" placeholder="Paladin 2" value={classAndLevel} onChange={({target:{value}}) => {
+                  getClass(value)
+                  getLevel(value)
+                  setClassAndLevel(value)
+                  }}/>
               </li>
               <li>
                 <label for="background">Background</label>
@@ -85,11 +185,11 @@ const Character = () => {
               </li>
               <li>
                 <label for="playername">Player Name</label>
-                <input name="playername" placeholder="Player McPlayerface"/>
+                <input name="playername" placeholder="Player McPlayerface" value={playerName} onChange={({target:{value}}) => setPlayerName(value)}/>
               </li>
               <li>
                 <label for="race">Race</label>
-                <input name="race" placeholder="Half-elf" />
+                <input name="race" placeholder="Half-elf" value={raceType} onChange={({target:{value}}) => setRaceType(value)}/>
               </li>
               <li>
                 <label for="alignment">Alignment</label>
@@ -441,7 +541,7 @@ const Character = () => {
                 <div>
                   <div class="total">
                     <label for="totalhd">Total</label>
-                    <input name="totalhd" placeholder="2d10" type="text" value={`${level} d10`}/>
+                    <input name="totalhd" placeholder="2d10" type="text" value={`${level} ${hitDice}`}/>
                   </div>
                   <div class="remaining">
                     <label for="remaininghd">Hit Dice</label>
@@ -565,21 +665,26 @@ const Character = () => {
           <section>
             <section class="flavor">
               <div class="personality">
-                <label for="personality">Personality</label><textarea name="personality"></textarea>
+                <label for="personality">Personality</label>
+                <textarea name="personality"></textarea>
               </div>
               <div class="ideals">
-                <label for="ideals">Ideals</label><textarea name="ideals"></textarea>
+                <label for="ideals">Ideals</label>
+                <textarea name="ideals"></textarea>
               </div>
               <div class="bonds">
-                <label for="bonds">Bonds</label><textarea name="bonds"></textarea>
+                <label for="bonds">Bonds</label>
+                <textarea name="bonds"></textarea>
               </div>
               <div class="flaws">
-                <label for="flaws">Flaws</label><textarea name="flaws"></textarea>
+                <label for="flaws">Flaws</label>
+                <textarea name="flaws"></textarea>
               </div>
             </section>
             <section class="features">
               <div>
-                <label for="features">Features and Traits</label><textarea name="features"></textarea>
+                <label for="features">Features and Traits</label>
+                <textarea name="features"></textarea>
               </div>
             </section>
           </section>

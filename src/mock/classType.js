@@ -1,6 +1,7 @@
 const classTypes = [
  "Barbaro",
  "Bardo",
+ "Clérigo",
  "Fighter",
  "Paladino",
  "Monge",

@@ -8,6 +8,8 @@ import { EditAndDelete } from "../Containers";
 import { AddPlayerForm, AddNPCForm} from "../Templates";
 
 import { campaignList, playersList, sessionList, npcs } from '../mock'
+import { useDispatch } from "react-redux";
+import savePlayerInfo from "../redux/actions/save_playerInfo";
 
 const { Panel } = Collapse;
 
@@ -44,21 +46,12 @@ const SessionItem = styled.div`
  padding: 1rem 0.5rem;
 `;
 
-const DeleteButton = styled.button`
- border: none;
- border-radius: 8px;
- background-color: #b21f66;
- color: white;
- font-weight: 400;
- cursor: pointer;
- margin-left: 1rem;
-`;
-
 const AvatarWrapper = styled.div`
  display: flex;
  flex-direction: row;
  align-items: center;
  justify-content: center;
+ cursor: pointer;
 `;
 
 const SessionsListItem = ({ title, onClick, onDelete }) => (
@@ -75,9 +68,10 @@ const PlayersListItem = ({
  classType,
  raceType,
  level,
+ onClick
 }) => (
  <PlayerItem>
-  <AvatarWrapper>
+  <AvatarWrapper onClick={onClick}>
    <Avatar src={avatar} size="large" style={{ marginRight: "1rem" }} />
    <PlayerInfo>
     <PlayerInfoTitle>Personagem:</PlayerInfoTitle>
@@ -152,6 +146,7 @@ const EditCampaign = () => {
  const [npcList, setNPCs] = useState(npcs);
  const { id } = useParams();
  const history = useHistory();
+ const dispatch = useDispatch()
 
  useEffect(() => {
   const filteredCampaign = campaignList.filter(
@@ -163,6 +158,24 @@ const EditCampaign = () => {
  const OpenAddPlayerForm = () => {
   setPlayerFormVisible(true);
  };
+
+ const redirectToPlayerSheet = (playerInfo) => {
+   const {
+    character, 
+    name,
+    classType,
+    raceType,
+    level
+   } = playerInfo
+  dispatch(savePlayerInfo({
+    characterName: character,
+    playerName: name,
+    classType,
+    raceType,
+    level,
+  }))
+  history.push("/teste")
+ }
 
  const AddPlayer = ({
   avatar,
@@ -269,6 +282,13 @@ const EditCampaign = () => {
        classType={classType}
        raceType={raceType}
        level={level}
+       onClick={() => redirectToPlayerSheet({
+        character, 
+        name,
+        classType,
+        raceType,
+        level
+       })}
       />
      )
     )}
@@ -276,9 +296,12 @@ const EditCampaign = () => {
    <CampaignSection>
     <h1>
      <span>SESSÕES</span>
-     <DeleteButton onClick={() => history.push("/sessions/newSession")}>
+     <Button 
+      backgroundColor= "#b21f66"
+      textColor="white"
+      onClick={() => history.push("/sessions/newSession")}>
       Adicionar
-     </DeleteButton>
+     </Button>
     </h1>
     <Collapse accordion bordered={false}>
      {sessionList.map(({ title, description, id }) => (
@@ -295,9 +318,12 @@ const EditCampaign = () => {
    <CampaignSection>
     <h1>
      <span>NPCs</span>
-     <DeleteButton onClick={() => setNPCFormVisible(true)}>
+     <Button 
+      backgroundColor= "#b21f66"
+      textColor="white"
+      onClick={() => setNPCFormVisible(true)}>
       Adicionar
-     </DeleteButton>
+     </Button>
      <AddNPCForm
       visible={addNPCFormVisible}
       onClose={() => setNPCFormVisible(false)}
