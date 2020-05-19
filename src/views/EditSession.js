@@ -2,8 +2,17 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Input, Collapse, Modal } from "antd";
 import { sessionList } from "../mock";
-import { Button } from "../Component"
-import { AddMusicForm, AddNPCSessionForm, AddChallengeForm, MonstersInfo} from "../Templates";
+import { Button, TitleInfo } from "../Component"
+import { 
+    AddMusicForm, 
+    AddNPCSessionForm, 
+    AddChallengeForm, 
+    AddDescriptionForm,
+    MonstersInfo,
+    ChallengeInfo,
+    MusicInfo,
+    DescriptionInfo
+} from "../Templates";
 
 const mockChapter = {
  id: (Math.random() * 1000).toFixed(0),
@@ -31,15 +40,6 @@ const SessionInfo = styled.h2`
  font-size: 14px;
 `;
 
-const DeleteButton = styled.button`
- border: none;
- border-radius: 8px;
- background-color: #b21f66;
- color: white;
- font-weight: 400;
- cursor: pointer;
- margin-left: 1rem;
-`;
 const PlayerItem = styled.div`
  display: flex;
  flex-direction: column;
@@ -58,13 +58,6 @@ const PlayerInfo = styled.div`
  border-bottom: 1px solid #c7c7c7;
 `;
 
-const PlayerInfoTitle = styled.div`
- width: 100%;
- display: flex;
- justify-content: space-between;
- font-weight: bold;
-`;
-
 const DeleteChapterDiv = styled.div`
  width: 100%;
  display: flex;
@@ -78,6 +71,7 @@ const EditSession = () => {
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
+ const [addDescriptionModalOpen, setDescriptionModalOpen] = useState(false);
  const [addMusicModalOpen, setMusicModalOpen] = useState(false);
  const [addNPCModalOpen, setNPCModalOpen] = useState(false);
  const [addMonstersOpen, setMonstersOpen] = useState(false);
@@ -123,10 +117,21 @@ const EditSession = () => {
   const newChapters = [...chapters, newChapter];
   setChapters(newChapters);
  };
+
  const setMonsters = (monster, index) => {
   const newChapter = {
    ...chapters[index],
    monsters: monster,
+  };
+  chapters.splice(index, 1);
+  const newChapters = [...chapters, newChapter];
+  setChapters(newChapters);
+ };
+
+ const setChapterDescription = (newDescription, index) => {
+  const newChapter = {
+   ...chapters[index],
+   description: [...chapters[index].description,newDescription],
   };
   chapters.splice(index, 1);
   const newChapters = [...chapters, newChapter];
@@ -175,32 +180,47 @@ const EditSession = () => {
    <SessionSection>
     <h1>
      <span>Capítulos</span>
-     <DeleteButton onClick={() => AddChapter()}>Adicionar</DeleteButton>
+     <Button 
+        backgroundColor="#b21f66"
+        textColor="white" 
+        onClick={() => AddChapter()}>
+            Adicionar
+        </Button>
     </h1>
     <Collapse accordion bordered={false}>
      {chapters.map(
       (
-       { id, text, npcs, playlist, monsters, challengers, magicItems },
+       { id, description, npcs, playlist, monsters, challengers, magicItems },
        indexChapter
       ) => (
        <Panel key={id} header={`capítulo ${id}`}>
         <PlayerItem>
          <PlayerInfo>
-          <PlayerInfoTitle>
+          <TitleInfo>
            <span>Descrição: </span>
            <Button
             backgroundColor="#373737" 
             textColor="white"
-            disable
+            onClick={() => setDescriptionModalOpen(true)}
             >
              Editar
             </Button>
-          </PlayerInfoTitle>
-          <span>{text}</span>
+          </TitleInfo>
+          <AddDescriptionForm visible={addDescriptionModalOpen} onClose={() => setDescriptionModalOpen(false)} onSubmit={
+              (description) => {
+                setChapterDescription(description, indexChapter)
+                setDescriptionModalOpen(false)
+              } 
+          }/>
+          {
+            description.map(({id, text, isSpeak}) => (
+                <DescriptionInfo key={id} text={text} isSpeak={isSpeak}/>
+            ))
+          }
          </PlayerInfo>
 
          <PlayerInfo>
-          <PlayerInfoTitle>
+          <TitleInfo>
            <span>NPCs: </span>
            <Button
             backgroundColor="#373737" 
@@ -220,24 +240,25 @@ const EditSession = () => {
             }}
             npcsDefault={npcs}
            />
-          </PlayerInfoTitle>
+          </TitleInfo>
           <div>
            {npcs.length > 0 ? (
             npcs.map(({ id, name }) => (
              <div key={id} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Nome:</PlayerInfoTitle>
+              <TitleInfo>Nome:</TitleInfo>
               <span> {name}</span>
              </div>
             ))
            ) : (
             <div style={{ margin: "1rem 0" }}>
-             <PlayerInfoTitle>Não há NPCs selecionados</PlayerInfoTitle>
+             <TitleInfo>Não há NPCs selecionados</TitleInfo>
             </div>
            )}
           </div>
          </PlayerInfo>
+
          <PlayerInfo>
-          <PlayerInfoTitle>
+          <TitleInfo>
            <span>Músicas: </span>
            <Button
             backgroundColor="#373737" 
@@ -255,18 +276,15 @@ const EditSession = () => {
             }}
             musicsDefault={playlist}
            />
-          </PlayerInfoTitle>
+          </TitleInfo>
           <div>
            {playlist.length > 0 ? (
-            playlist.map(({ id, title }) => (
-             <div key={id} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Título:</PlayerInfoTitle>
-              <span> {title}</span>
-             </div>
+            playlist.map(({ id, title, track_id, loop }) => (
+             <MusicInfo title={title} trackId={track_id} loop={loop}/>
             ))
            ) : (
             <div style={{ margin: "1rem 0" }}>
-             <PlayerInfoTitle>Não há músicas selecionadas</PlayerInfoTitle>
+             <TitleInfo>Não há músicas selecionadas</TitleInfo>
             </div>
            )}
           </div>
@@ -299,29 +317,23 @@ const EditSession = () => {
             challengesDefault={challengers}
 
         />
-          <PlayerInfoTitle>
+          <TitleInfo>
            <span>Desafios: </span>
            <Button
             backgroundColor="#373737" 
-            textColor="white" onClick={() => setChallengeModalOpen(true)} >Editar</Button>
-          </PlayerInfoTitle>
+            textColor="white" 
+            onClick={() => setChallengeModalOpen(true)}>
+            Editar
+            </Button>
+          </TitleInfo>
           <div>
            {challengers.length > 0 ? (
-            challengers.map(({ id, title, dc }) => (
-             <div key={id} style={{ margin: "1rem 0", display: 'flex', flexDirection: "row", justifyContent: 'space-between' }}>
-                <div>   
-                    <PlayerInfoTitle>Título:</PlayerInfoTitle>
-                    <span> {title}</span>
-                </div>
-                <div> 
-                    <PlayerInfoTitle>Dificuldade:</PlayerInfoTitle>
-                    <span> {dc}</span>
-                </div>
-             </div>
+            challengers.map(({ id, title, dc, skill, secret }) => (
+            <ChallengeInfo key={id} title={title} dc={dc} skill={skill} secret={secret}/>
             ))
            ) : (
             <div style={{ margin: "1rem 0" }}>
-             <PlayerInfoTitle>Não há desafios selecionados</PlayerInfoTitle>
+             <TitleInfo>Não há desafios selecionados</TitleInfo>
             </div>
            )}
           </div>
@@ -330,34 +342,41 @@ const EditSession = () => {
 
         <PlayerItem>
          <PlayerInfo>
-          <PlayerInfoTitle>
+          <TitleInfo>
            <span>Itens Mágicos: </span>
            <Button
             backgroundColor="#373737" 
-            textColor="white">Editar</Button>
-          </PlayerInfoTitle>
+            textColor="white"
+            disable
+            >
+                Editar
+            </Button>
+          </TitleInfo>
           <div>
            {magicItems.length > 0 ? (
             magicItems.map(({ id, title }) => (
              <div key={id} style={{ margin: "1rem 0" }}>
-              <PlayerInfoTitle>Título:</PlayerInfoTitle>
+              <TitleInfo>Título:</TitleInfo>
               <span> {title}</span>
              </div>
             ))
            ) : (
             <div style={{ margin: "1rem 0" }}>
-             <PlayerInfoTitle>
+             <TitleInfo>
               Não há itens mágicos selecionados
-             </PlayerInfoTitle>
+             </TitleInfo>
             </div>
            )}
           </div>
          </PlayerInfo>
         </PlayerItem>
         <DeleteChapterDiv>
-         <DeleteButton onClick={() => showDeleteConfirm(id)}>
+         <Button
+            backgroundColor="#b21f66"
+            textColor="white" 
+            onClick={() => showDeleteConfirm(id)}>
           Deletar Capítulo
-         </DeleteButton>
+         </Button>
         </DeleteChapterDiv>
        </Panel>
       )
@@ -365,7 +384,14 @@ const EditSession = () => {
     </Collapse>
    </SessionSection>
    <DeleteChapterDiv>
-    <DeleteButton onClick={() => console.log("")}>Salvar Sessão</DeleteButton>
+    <Button 
+    backgroundColor="#b21f66"
+    textColor="white"
+    onClick={() => console.log("")}
+    disable
+    >
+        Salvar Sessão
+    </Button>
    </DeleteChapterDiv>
   </Card>
  );

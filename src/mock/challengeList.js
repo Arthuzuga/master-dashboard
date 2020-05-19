@@ -3,15 +3,17 @@ const challengeList =  [
     id: '1',
     title: 'Queda no buraco',
     dc: 12,
-    skill: 'Acrobatics',
+    skill: 'Acrobacia',
     players: [],
+    secret: false
 },
 {
-    id: '1',
+    id: '2',
     title: 'Armadilha da porta',
     dc: 15,
     skill: 'Wisdom',
     players: [],
+    secret: true
 },
 ];
 

@@ -10,8 +10,18 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text:
-     "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
+    description:[
+      {
+        id: "1",
+        text: "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
+        isSpeak: true
+      },
+      {
+        id: "2",
+        text: "",
+        isSpeak: false,
+      },
+    ],
     playlist: playlist
      .filter((playlist) => playlist.name === "Aventura")
      .flatMap((music) => music.songs),
@@ -22,7 +32,13 @@ const sessions = [
    },
    {
     id: "2",
-    text: "Vazio",
+    description:[
+      {
+        id: "4",
+        text: "Vazio",
+        isSpeak: false,
+      }
+    ],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -38,7 +54,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -54,7 +70,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -70,7 +86,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -86,7 +102,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -102,7 +118,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -118,7 +134,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -134,7 +150,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -150,7 +166,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -166,7 +182,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -182,7 +198,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -198,7 +214,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -214,7 +230,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -230,7 +246,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -246,7 +262,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -262,7 +278,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -278,7 +294,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
@@ -294,7 +310,7 @@ const sessions = [
   chapters: [
    {
     id: "1",
-    text: "",
+    description:[],
     playlist: [],
     npcs: [],
     magicItems: [],
