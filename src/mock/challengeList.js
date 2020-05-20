@@ -1,6 +1,6 @@
 const challengeList =  [
 {
-    id: '1',
+    id: 1,
     title: 'Queda no buraco',
     dc: 12,
     skill: 'Acrobacia',
@@ -8,7 +8,7 @@ const challengeList =  [
     secret: false
 },
 {
-    id: '2',
+    id: 2,
     title: 'Armadilha da porta',
     dc: 15,
     skill: 'Wisdom',

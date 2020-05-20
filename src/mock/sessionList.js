@@ -9,15 +9,15 @@ const sessions = [
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[
       {
-        id: "1",
+        id: 1,
         text: "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
         isSpeak: true
       },
       {
-        id: "2",
+        id: 2,
         text: "",
         isSpeak: false,
       },
@@ -31,10 +31,10 @@ const sessions = [
     monsters: [],
    },
    {
-    id: "2",
+    id: 2,
     description:[
       {
-        id: "4",
+        id: 1,
         text: "Vazio",
         isSpeak: false,
       }
