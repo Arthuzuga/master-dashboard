@@ -1,23 +1,25 @@
 import React from 'react'
-import { Button } from '../Component'
+import styled from 'styled-components'
+import { Icon } from '@iconify/react';
+import trashAlt from '@iconify/icons-fa-regular/trash-alt';
+import editIcon from '@iconify/icons-fa-regular/edit';
+
+const StyledIcon = styled(Icon)`
+  margin: 0 1rem;
+  cursor: pointer;
+`
 
 const EditAndDelete = ({onEdit, onDelete}) => {
   return (
     <div>
-      <Button 
-        backgroundColor="#373737" 
-        textColor="white" 
+      <StyledIcon 
+        icon={editIcon} 
         onClick={onEdit}
-        >
-          Editar
-        </Button>
-      <Button 
-        backgroundColor="#b21f66" 
-        textColor="white" 
+        />
+      <StyledIcon 
+        icon={trashAlt}
         onClick={onDelete}
-        >
-          Apagar
-        </Button>
+      />
     </div>
   )
 }
