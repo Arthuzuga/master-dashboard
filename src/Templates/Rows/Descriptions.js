@@ -1,7 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
+import { Icon } from '@iconify/react';
+import trashAlt from '@iconify/icons-fa-regular/trash-alt';
 
 const Message = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   margin-top: 1rem;
   padding: 1rem;
   background-color: ${({isSpeak}) => isSpeak && "#e7e7e7"};
@@ -9,13 +14,23 @@ const Message = styled.div`
   border-right: none;
   border-left: none;
   font-style: ${({isSpeak}) => isSpeak && "italic"};
+  span{
+    word-break: all;
+  }
 `
-// ADICIONAR BOTAO PARA APAGAR ELEMENTO DA LISTA DE TEXTOS
 
-const DescriptionInfo = ({text, isSpeak}) => {
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+`
+
+const DescriptionInfo = ({text, isSpeak, onDelete}) => {
   return (
     <Message isSpeak={isSpeak}>
       <span>{text}</span>
+      <StyledIcon 
+        icon={trashAlt}
+        onClick={onDelete}
+      />
     </Message>
   )
 }

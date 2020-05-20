@@ -90,32 +90,40 @@ const EditSession = () => {
   setChapters(newChapters);
  };
 
+ const sortArray = (array) => {
+    return array.sort((a,b) => {
+        if (a.id < b.id) return -1
+        if (a.id > b.id) return 1
+        return 0
+    })
+}
+
+const editChapter = (index, newChapter) => {
+    chapters.splice(index, 1);
+  const newChapters = sortArray([...chapters, newChapter]);
+  setChapters(newChapters);
+}
+
  const setMusics = (songs, index) => {
   const newChapter = {
    ...chapters[index],
    playlist: songs,
   };
-  chapters.splice(index, 1);
-  const newChapters = [...chapters, newChapter];
-  setChapters(newChapters);
+  editChapter(index, newChapter)  
  };
  const setChallenges = (challenge, index) => {
   const newChapter = {
    ...chapters[index],
-   challenge,
+   challengers: challenge,
   };
-  chapters.splice(index, 1);
-  const newChapters = [...chapters, newChapter];
-  setChapters(newChapters);
+  editChapter(index, newChapter)  
  };
  const setNPCs = (npc, index) => {
   const newChapter = {
    ...chapters[index],
    npcs: npc,
   };
-  chapters.splice(index, 1);
-  const newChapters = [...chapters, newChapter];
-  setChapters(newChapters);
+  editChapter(index, newChapter)  
  };
 
  const setMonsters = (monster, index) => {
@@ -123,9 +131,7 @@ const EditSession = () => {
    ...chapters[index],
    monsters: monster,
   };
-  chapters.splice(index, 1);
-  const newChapters = [...chapters, newChapter];
-  setChapters(newChapters);
+  editChapter(index, newChapter)  
  };
 
  const setChapterDescription = (newDescription, index) => {
@@ -133,10 +139,28 @@ const EditSession = () => {
    ...chapters[index],
    description: [...chapters[index].description,newDescription],
   };
-  chapters.splice(index, 1);
-  const newChapters = [...chapters, newChapter];
-  setChapters(newChapters);
+  editChapter(index, newChapter)  
  };
+
+ const DeleteChapter = (id) => {
+    const newChapters = chapters.filter((chapter) => chapter.id !== id);
+    setChapters(newChapters);
+   };
+  
+    const deleteDescriptionText = (id, indexChapter) => {
+      const newChapter = {
+          ...chapters[indexChapter],
+          description: [...chapters[indexChapter].description.filter(des => des.id !== id)],
+         };
+         editChapter(indexChapter, newChapter)   
+   }
+    const deleteMonster = (name, indexChapter) => {
+      const newChapter = {
+          ...chapters[indexChapter],
+          monsters: [...chapters[indexChapter].monsters.filter(des => des.name !== name)],
+         };
+         editChapter(indexChapter, newChapter)   
+   }
 
  const showDeleteConfirm = (id) =>
   confirm({
@@ -150,10 +174,8 @@ const EditSession = () => {
     DeleteChapter(id);
    },
   });
- const DeleteChapter = (id) => {
-  const newChapters = chapters.filter((chapter) => chapter.id !== id);
-  setChapters(newChapters);
- };
+
+
 
  return (
   <Card title="Nova sessão" bordered={false} style={{ width: "100%" }}>
@@ -214,7 +236,7 @@ const EditSession = () => {
           }/>
           {
             description.map(({id, text, isSpeak}) => (
-                <DescriptionInfo key={id} text={text} isSpeak={isSpeak}/>
+                <DescriptionInfo key={id} text={text} isSpeak={isSpeak} onDelete={() => deleteDescriptionText(id, indexChapter)}/>
             ))
           }
          </PlayerInfo>
@@ -301,6 +323,7 @@ const EditSession = () => {
                     setMonsters(newMonsters, indexChapter);
                     setMonstersOpen(false);
                 }}
+                onDelete={deleteMonster}
             />
          </PlayerInfo>
         </PlayerItem>

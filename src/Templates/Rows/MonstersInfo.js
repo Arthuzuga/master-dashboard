@@ -1,8 +1,22 @@
 import React from 'react'
 import AddMonstersForm from '../Forms/AddMonstersForm'
-import {TitleInfo, Button} from '../../Component'
+import styled from 'styled-components'
+import { Icon } from '@iconify/react';
+import trashAlt from '@iconify/icons-fa-regular/trash-alt';
+import { TitleInfo, Button } from '../../Component'
 
-const MonstersInfo = ({monsters, indexChapter, onEdit, onModalClose, isModalOpen, onSubmitForm}) => {
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+`
+
+const MonsterItemRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const MonstersInfo = ({monsters, indexChapter, onEdit, onModalClose, isModalOpen, onSubmitForm, onDelete}) => {
   return (
     <>
       <TitleInfo>
@@ -23,11 +37,17 @@ const MonstersInfo = ({monsters, indexChapter, onEdit, onModalClose, isModalOpen
       <div>
         {monsters.length > 0 ? (
           monsters.map(({ index, name, quantity }) => (
-            <div key={index} style={{ margin: "1rem 0" }}>
-            <TitleInfo>Nome:</TitleInfo>
-            <span> {name}</span>
-            <span> x{quantity}</span>
-            </div>
+            <MonsterItemRow key={index}>
+              <div style={{ margin: "1rem" }}>
+                <TitleInfo>Nome:</TitleInfo>
+                <span> {name}</span>
+                <span> x{quantity}</span>
+              </div>
+              <StyledIcon 
+                icon={trashAlt}
+                onClick={() => onDelete(name, indexChapter)}
+              />
+            </MonsterItemRow>
           ))
         ) : (
         <div style={{ margin: "1rem 0" }}>
