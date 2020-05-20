@@ -13,7 +13,7 @@ import "antd/dist/antd.css";
 import { getMonsters } from "./services/getMonsters";
 import { getEquipmentsCategory } from "./services/getEquipments";
 
-import AddDescriptionForm from './Templates/Forms/AddDescriptionForm'
+import Character from './Templates/Sheets/Character'
 
 const { Content } = Layout;
 
@@ -82,7 +82,7 @@ const App = (props) => {
         <Route path="/campaigns/:id" component={EditCampaign} />
         <Route path="/campaigns" component={Campaigns} />
         <Route path="/sessions/newSession" component={EditSession} />
-        <Route path="/teste" component={AddDescriptionForm} />
+        <Route path="/teste" component={Character} />
        </Switch>
       </Wrapper>
      </Content>
