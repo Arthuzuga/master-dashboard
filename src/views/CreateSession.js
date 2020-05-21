@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import { useHistory } from "react-router-dom";
+
 import styled from "styled-components";
 import { Card, Input, Collapse, Modal } from "antd";
 import { Icon } from '@iconify/react';
 import plusSquare from '@iconify/icons-fa-regular/plus-square';
+
+import selectCampaign from "../redux/actions/select_campaign";
+import saveCampaign from "../redux/actions/save_campaign";
+
 import { sessionList } from "../mock";
 import { Button, TitleInfo } from "../Component"
 import { 
@@ -74,6 +81,12 @@ const StyledIcon = styled(Icon)`
 `
 
 const CreateSession = () => {
+  const history = useHistory();
+  const campaignSelected = useSelector(state => state.selectedCampaign)
+  const campaignList = useSelector(state => state.campaigns)
+  const dispatch = useDispatch()
+
+
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
@@ -182,6 +195,28 @@ const editChapter = (index, newChapter) => {
    },
   });
 
+  const editAllCampaigns = (url,newCampaignData ) => {
+    const campaignEdited = campaignList.filter((camp) => camp.url !== url)
+    const newCampaigns = [...campaignEdited, newCampaignData]
+    dispatch(saveCampaign(newCampaigns))
+ }
+
+  const addSession = () => {
+    const sessions = campaignSelected.sessions;
+    const newSession = {
+      id: sessions.length +1,
+      title: title ,
+      description: description,
+      chapters: chapters,
+     };
+    const newCampaignData = {
+      ...campaignSelected,
+      sessions: [...sessions, newSession]
+    }
+    dispatch(selectCampaign(newCampaignData))
+    editAllCampaigns(newCampaignData.url, newCampaignData)
+    history.push(newCampaignData.url)
+  }
 
 
  return (
@@ -415,8 +450,8 @@ const editChapter = (index, newChapter) => {
     <Button 
     backgroundColor="#b21f66"
     textColor="white"
-    onClick={() => console.log("")}
-    disable
+    onClick={addSession}
+    // disable
     >
         Salvar Sessão
     </Button>

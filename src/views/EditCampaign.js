@@ -297,6 +297,16 @@ const EditCampaign = () => {
   dispatch(selectCampaign(newCampaignData))
   editAllCampaigns(newCampaignData.url, newCampaignData)
  };
+ const DeleteSession = (id) => {
+  const filteredSessions = campaign.sessions.filter((session) => session.id !== id);
+  const newCampaignData = {
+    ...campaign,
+    sessions: filteredSessions
+  }
+  setCampaign(newCampaignData)
+  dispatch(selectCampaign(newCampaignData))
+  editAllCampaigns(newCampaignData.url, newCampaignData)
+ };
 
  const { title, system, players, sessions, npcs  } = campaign || {
   title: "",
@@ -385,7 +395,7 @@ const EditCampaign = () => {
       <SessionsListItem
         title={`${description} da sessão ${title}`}
         onClick={() => console.log("oi")}
-        onDelete={() => console.log("oi")}
+        onDelete={() => DeleteSession(id)}
       />
       </Panel>
     )) : (
