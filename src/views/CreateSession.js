@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Input, Collapse, Modal } from "antd";
+import { Icon } from '@iconify/react';
+import plusSquare from '@iconify/icons-fa-regular/plus-square';
 import { sessionList } from "../mock";
 import { Button, TitleInfo } from "../Component"
 import { 
@@ -14,10 +16,10 @@ import {
     DescriptionInfo
 } from "../Templates";
 
-const mockChapter = {
- id: (Math.random() * 1000).toFixed(0),
+const chapterTemplate = {
  text: "",
  playlist: [],
+ description:[],
  npcs: [],
  magicItems: [],
  challengers: [],
@@ -66,8 +68,12 @@ const DeleteChapterDiv = styled.div`
  padding-top: 1rem;
 `;
 
-const EditSession = () => {
- //  const [id, setId] = useState("");
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+  margin-left: 2rem;
+`
+
+const CreateSession = () => {
  const [title, setTitle] = useState("");
  const [description, setDescription] = useState("");
  const [chapters, setChapters] = useState([]);
@@ -76,9 +82,7 @@ const EditSession = () => {
  const [addNPCModalOpen, setNPCModalOpen] = useState(false);
  const [addMonstersOpen, setMonstersOpen] = useState(false);
  const [addChallengeModalOpen, setChallengeModalOpen] = useState(false);
- //  const [npcs, setNPCs] = useState([]);
-//   const [challengers, setChallengers] = useState([]);
- //  const [magicItems, setMagicItems] = useState([]);
+
 
  useEffect(() => {
   const chapterList = sessionList[0].chapters;
@@ -86,7 +90,10 @@ const EditSession = () => {
  }, []);
 
  const AddChapter = () => {
-  const newChapters = [...chapters, mockChapter];
+  const newChapters = [...chapters, {
+    ...chapterTemplate,
+    id: (Math.random() * 1000).toFixed(0),
+}];
   setChapters(newChapters);
  };
 
@@ -99,7 +106,7 @@ const EditSession = () => {
 }
 
 const editChapter = (index, newChapter) => {
-    chapters.splice(index, 1);
+  chapters.splice(index, 1);
   const newChapters = sortArray([...chapters, newChapter]);
   setChapters(newChapters);
 }
@@ -202,12 +209,10 @@ const editChapter = (index, newChapter) => {
    <SessionSection>
     <h1>
      <span>Capítulos</span>
-     <Button 
-        backgroundColor="#b21f66"
-        textColor="white" 
-        onClick={() => AddChapter()}>
-            Adicionar
-        </Button>
+     <StyledIcon
+        height="16" 
+        icon={plusSquare}
+        onClick={() => AddChapter()} />
     </h1>
     <Collapse accordion bordered={false}>
      {chapters.map(
@@ -420,4 +425,4 @@ const editChapter = (index, newChapter) => {
  );
 };
 
-export default EditSession;
+export default CreateSession;

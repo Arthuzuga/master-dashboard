@@ -1,5 +1,5 @@
 // import npcsList from "../../mock/npcs";
-import sessionList from "../../mock/sessionList";
+import { campaignList, sessionList } from "../../mock";
 
 export default {
  example: {},
@@ -13,5 +13,7 @@ export default {
   classType: '',
   raceType: '',
   level: 1,
- }
+ },
+ campaigns: campaignList,
+ selectedCampaign: {},
 };

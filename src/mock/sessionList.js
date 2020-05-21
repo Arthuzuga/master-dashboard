@@ -13,12 +13,12 @@ const sessions = [
     description:[
       {
         id: 1,
-        text: "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
+        text: "A Taverna Chifre de dragão, é um local simples, onde aventureiros de passagem por Delorá se reunem para beber o tradicional Rum Deloriano, comer e descansar para suas demais afazeres. A estalagem está relativamente vazia, das que se somam 10 mesas, apenas 3 está ocupadas, poucos são os atendentes também, jovens, talvez filhos dos taverneiros. O cheiro de porco toma o ar e no fundo do salão principal é um anão bardo tocando em seu berimbal uma breve canção.",
         isSpeak: true
       },
       {
         id: 2,
-        text: "",
+        text: "Os aventureiros irão se encontrar na taverna Chifre de dragão e irão saber ou pelo taverneiro Harold ou pelo quadro de procurados sobre o caso de desaparecimento de pessoas em Delorá",
         isSpeak: false,
       },
     ],
@@ -28,21 +28,6 @@ const sessions = [
     npcs: npcs,
     magicItems: [],
     challengers: challengeList,
-    monsters: [],
-   },
-   {
-    id: 2,
-    description:[
-      {
-        id: 1,
-        text: "Vazio",
-        isSpeak: false,
-      }
-    ],
-    playlist: [],
-    npcs: [],
-    magicItems: [],
-    challengers: [],
     monsters: [],
    },
   ],

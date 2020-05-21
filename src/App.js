@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import saveMonsters from "./redux/actions/save_monsters";
 import saveEquipment from "./redux/actions/save_equipments";
 
-import { Home, Campaigns, EditCampaign, EditSession } from "./views";
+import { Home, Campaigns, EditCampaign, CreateSession } from "./views";
 import { Drawer } from "./Component";
 import "antd/dist/antd.css";
 import { getMonsters } from "./services/getMonsters";
@@ -81,7 +81,7 @@ const App = (props) => {
         <Route exact path="/" component={Home} />
         <Route path="/campaigns/:id" component={EditCampaign} />
         <Route path="/campaigns" component={Campaigns} />
-        <Route path="/sessions/newSession" component={EditSession} />
+        <Route path="/sessions/newSession" component={CreateSession} />
         <Route path="/teste" component={Character} />
        </Switch>
       </Wrapper>

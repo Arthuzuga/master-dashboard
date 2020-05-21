@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import styled from "styled-components";
-import { Card, Avatar, Collapse } from "antd";
+import { Card, Avatar, Collapse, Empty } from "antd";
+
+import { Icon } from '@iconify/react';
+import trashAlt from '@iconify/icons-fa-regular/trash-alt';
 
 import { Button } from "../Component";
 import { EditAndDelete } from "../Containers";
 import { AddPlayerForm, AddNPCForm} from "../Templates";
 
-import { campaignList, playersList, sessionList, npcs } from '../mock'
-import { useDispatch } from "react-redux";
 import savePlayerInfo from "../redux/actions/save_playerInfo";
+import selectCampaign from "../redux/actions/select_campaign";
+import saveCampaign from "../redux/actions/save_campaign";
 
 const { Panel } = Collapse;
 
@@ -54,6 +59,10 @@ const AvatarWrapper = styled.div`
  cursor: pointer;
 `;
 
+const StyledIcon = styled(Icon)`
+  cursor: pointer;
+`
+
 const SessionsListItem = ({ title, onClick, onDelete }) => (
  <SessionItem>
   <span>{title}</span>
@@ -68,7 +77,8 @@ const PlayersListItem = ({
  classType,
  raceType,
  level,
- onClick
+ onClick,
+ onDelete
 }) => (
  <PlayerItem>
   <AvatarWrapper onClick={onClick}>
@@ -93,6 +103,9 @@ const PlayersListItem = ({
   <PlayerInfo>
    <PlayerInfoTitle>Nível:</PlayerInfoTitle>
    <span>{level}</span>
+  </PlayerInfo>
+  <PlayerInfo>
+    <StyledIcon icon={trashAlt} onClick={onDelete}/>
   </PlayerInfo>
  </PlayerItem>
 );
@@ -139,21 +152,26 @@ const NPCListItem = ({
 );
 
 const EditCampaign = () => {
+  const history = useHistory();
+  const dispatch = useDispatch()
+  const campaignSelected = useSelector(state => state.selectedCampaign)
+  const campaignList = useSelector(state => state.campaigns)
+
  const [campaign, setCampaign] = useState("");
- const [players, setPlayers] = useState(playersList);
+ const [npcSelected, setNPCSelection] = useState("");
  const [addPlayerFormVisible, setPlayerFormVisible] = useState(false);
  const [addNPCFormVisible, setNPCFormVisible] = useState(false);
- const [npcList, setNPCs] = useState(npcs);
- const { id } = useParams();
- const history = useHistory();
- const dispatch = useDispatch()
+
 
  useEffect(() => {
-  const filteredCampaign = campaignList.filter(
-   (session) => session.url === `/campaigns/${id}`
-  );
-  setCampaign(filteredCampaign[0]);
- }, [id]);
+     setCampaign(campaignSelected);
+ }, [campaignSelected]);
+
+ const editAllCampaigns = (url,newCampaignData ) => {
+    const campaignEdited = campaignList.filter((camp) => camp.url !== url)
+    const newCampaigns = [...campaignEdited, newCampaignData]
+    dispatch(saveCampaign(newCampaigns))
+ }
 
  const OpenAddPlayerForm = () => {
   setPlayerFormVisible(true);
@@ -178,6 +196,7 @@ const EditCampaign = () => {
  }
 
  const AddPlayer = ({
+  id,
   avatar,
   name,
   character,
@@ -197,8 +216,14 @@ const EditCampaign = () => {
    email,
   };
 
-  const newPlayers = [...players, newPlayer];
-  setPlayers(newPlayers);
+  const newPlayers = [...campaign.players, newPlayer];
+  const newCampaignData = {
+    ...campaign,
+    players: newPlayers
+  }
+  setCampaign(newCampaignData)
+  dispatch(selectCampaign(newCampaignData))
+  editAllCampaigns(newCampaignData.url, newCampaignData)
   setPlayerFormVisible(false);
  };
 
@@ -229,127 +254,168 @@ const EditCampaign = () => {
    items,
   };
 
-  const newNPCs = [...npcList, newNPC];
-  setNPCs(newNPCs);
+  const newNPCs = [...campaign.npcs, newNPC];
+  const newCampaignData = {
+    ...campaign,
+    npcs: newNPCs
+  }
+  setCampaign(newCampaignData)
+  dispatch(selectCampaign(newCampaignData))
+  editAllCampaigns(newCampaignData.url, newCampaignData)
   setNPCFormVisible(false);
  };
 
  const DeletePlayer = (id) => {
-  const filteredPlayers = players.filter((player) => player.id !== id);
-  setPlayers(filteredPlayers);
+  const filteredPlayers = campaign.players.filter((player) => player.id !== id);
+  const newCampaignData = {
+    ...campaign,
+    players: filteredPlayers
+  }
+  setCampaign(newCampaignData)
+  dispatch(selectCampaign(newCampaignData))
+  editAllCampaigns(newCampaignData.url, newCampaignData)
   setPlayerFormVisible(false);
  };
  
  const DeleteNPC = (id) => {
-  const filteredNPC = npcList.filter((npc) => npc.id !== id);
-  setNPCs(filteredNPC);
+  const filteredNPC = campaign.npcs.filter((npc) => npc.id !== id);
+  const newCampaignData = {
+    ...campaign,
+    npcs: filteredNPC
+  }
+  setCampaign(newCampaignData)
+  dispatch(selectCampaign(newCampaignData))
+  editAllCampaigns(newCampaignData.url, newCampaignData)
  };
 
- const { title, system } = campaign || {
+ const { title, system, players, sessions, npcs  } = campaign || {
   title: "Não existe",
   system: "Não tem",
+  players :[],
+  sessions :[],
+  npcs :[],
  };
  return (
   <Card title={title} bordered={false} style={{ width: "100%" }}>
-   <CampaignSection>
-    <h1>SISTEMA</h1>
-    <span>{system}</span>
-   </CampaignSection>
-   <CampaignSection>
-    <h1>
-     <span>JOGADORES</span>
-     <Button
-      backgroundColor= "#b21f66"
-      textColor="white"
-      onClick={OpenAddPlayerForm}
-      >
+    <> 
+      <CampaignSection>
+        <h1>SISTEMA</h1>
+        <span>{system}</span>
+      </CampaignSection>
+      <CampaignSection>
+        <h1>
+        <span>JOGADORES</span>
+        <Button
+          backgroundColor= "#b21f66"
+          textColor="white"
+          onClick={OpenAddPlayerForm}
+          >
+            Adicionar
+          </Button>
+        <AddPlayerForm
+          visible={addPlayerFormVisible}
+          onClose={() => setPlayerFormVisible(false)}
+          onSubmit={AddPlayer}
+          onDelete={DeletePlayer}
+        />
+        </h1>
+      {
+      players !== undefined && players.length > 0 ? (
+        players.map(
+        ({ avatar, name, character, classType, raceType, level, id }, index) => (
+          <PlayersListItem
+          key={index}
+          avatar={avatar}
+          name={name}
+          character={character}
+          classType={classType}
+          raceType={raceType}
+          level={level}
+          onClick={() => redirectToPlayerSheet({
+            character, 
+            name,
+            classType,
+            raceType,
+            level
+          })}
+          onDelete={() => DeletePlayer(id)}
+          />
+        )
+      )
+      ):(
+        <Empty />
+      )}
+    </CampaignSection>
+    <CampaignSection>
+      <h1>
+      <span>SESSÕES</span>
+      <Button 
+        backgroundColor= "#b21f66"
+        textColor="white"
+        onClick={() => history.push("/sessions/newSession")}>
         Adicionar
       </Button>
-     <AddPlayerForm
-      visible={addPlayerFormVisible}
-      onClose={() => setPlayerFormVisible(false)}
-      onSubmit={AddPlayer}
-      onDelete={DeletePlayer}
-     />
-    </h1>
-    {players.map(
-     ({ avatar, name, character, classType, raceType, level }, index) => (
-      <PlayersListItem
-       key={index}
-       avatar={avatar}
-       name={name}
-       character={character}
-       classType={classType}
-       raceType={raceType}
-       level={level}
-       onClick={() => redirectToPlayerSheet({
-        character, 
-        name,
-        classType,
-        raceType,
-        level
-       })}
-      />
-     )
-    )}
-   </CampaignSection>
-   <CampaignSection>
-    <h1>
-     <span>SESSÕES</span>
-     <Button 
-      backgroundColor= "#b21f66"
-      textColor="white"
-      onClick={() => history.push("/sessions/newSession")}>
-      Adicionar
-     </Button>
-    </h1>
-    <Collapse accordion bordered={false}>
-     {sessionList.map(({ title, description, id }) => (
-      <Panel key={id} header={title}>
-       <SessionsListItem
-        title={`${description} da sessão ${title}`}
-        onClick={() => console.log("oi")}
-        onDelete={() => console.log("oi")}
-       />
-      </Panel>
-     ))}
-    </Collapse>
-   </CampaignSection>
-   <CampaignSection>
-    <h1>
-     <span>NPCs</span>
-     <Button 
-      backgroundColor= "#b21f66"
-      textColor="white"
-      onClick={() => setNPCFormVisible(true)}>
-      Adicionar
-     </Button>
-     <AddNPCForm
-      visible={addNPCFormVisible}
-      onClose={() => setNPCFormVisible(false)}
-      onSubmit={AddNPC}
-      onDelete={DeleteNPC}
-     />
-    </h1>
-    <Collapse accordion bordered={false}>
-     {npcList.map(
-      ({ id, name, age, raceType, alignment, ideal, bond, flaw }) => (
-       <Panel key={id} header={name}>
-        <NPCListItem
-         age={age}
-         alignment={alignment}
-         raceType={raceType}
-         ideal={ideal}
-         bond={bond}
-         flaws={flaw}
-         onClick={() => console.log()}
-         onDelete={() => DeleteNPC(id)}
+      </h1>
+      <Collapse accordion bordered={false}>
+      {
+      sessions !== undefined && sessions.length > 0 ?
+      sessions.map(({ title, description, id }) => (
+        <Panel key={id} header={title}>
+        <SessionsListItem
+          title={`${description} da sessão ${title}`}
+          onClick={() => console.log("oi")}
+          onDelete={() => console.log("oi")}
         />
-       </Panel>
-      )
-     )}
-    </Collapse>
-   </CampaignSection>
+        </Panel>
+      )) : (
+        <Empty/>
+      )}
+      </Collapse>
+    </CampaignSection>
+    <CampaignSection>
+      <h1>
+      <span>NPCs</span>
+      <Button 
+        backgroundColor= "#b21f66"
+        textColor="white"
+        onClick={() => setNPCFormVisible(true)}>
+        Adicionar
+      </Button>
+      <AddNPCForm
+        visible={addNPCFormVisible}
+        onClose={() => setNPCFormVisible(false)}
+        onSubmit={AddNPC}
+        onDelete={DeleteNPC}
+        npcDefault={npcSelected}
+      />
+      </h1>
+      <Collapse accordion bordered={false}>
+      {
+      npcs !== undefined && npcs.length > 0 ?
+      npcs.map(
+        ({ id, name, age, raceType, alignment, ideal, bond, flaw }) => (
+        <Panel key={id} header={name}>
+          <NPCListItem
+          age={age}
+          alignment={alignment}
+          raceType={raceType}
+          ideal={ideal}
+          bond={bond}
+          flaws={flaw}
+          onClick={() => {
+            setNPCSelection({ id, name, age, raceType, alignment, ideal, bond, flaw })
+            setNPCFormVisible(true)
+          }}
+          onDelete={() => DeleteNPC(id)}
+          />
+        </Panel>
+        )
+      ): (
+        <Empty />
+      )}
+      </Collapse>
+    </CampaignSection>
+   </>
   </Card>
  );
 };

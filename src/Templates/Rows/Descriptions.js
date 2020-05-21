@@ -15,7 +15,7 @@ const Message = styled.div`
   border-left: none;
   font-style: ${({isSpeak}) => isSpeak && "italic"};
   span{
-    word-break: all;
+    width: 80%;
   }
 `
 

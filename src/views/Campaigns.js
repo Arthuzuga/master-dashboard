@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+
 import styled from "styled-components";
-import { Card, Modal, Input } from "antd";
+import { Card, Modal, Input, Empty } from "antd";
+
+import saveCampaign  from '../redux/actions/save_campaign'
+import selectCampaign  from '../redux/actions/select_campaign'
+
 import { Button } from '../Component'
 import { EditAndDelete } from '../Containers'
-
-import campaign from "../mock/campaignList";
 
 const { confirm } = Modal;
 
@@ -40,7 +44,9 @@ const CampaignListItem = ({ title, onClick, onDelete }) => (
 
 const Campaigns = () => {
  const history = useHistory();
- const [campaignList, setcampaignList] = useState(campaign);
+ const campaignList = useSelector(state => state.campaigns)
+ const dispatch = useDispatch()
+
  const [createcampaign, setCreatecampaign] = useState(false);
  const [inputTitle, setinputTitle] = useState("");
  const [inputSystem, setinputSystem] = useState("");
@@ -49,7 +55,7 @@ const Campaigns = () => {
   const filteredcampaign = campaignList.filter(
    (campaign) => campaign.url !== url
   );
-  setcampaignList(filteredcampaign);
+  dispatch(saveCampaign(filteredcampaign))
  };
  const Addcampaign = (title, system, url) => {
   const newcampaign = {
@@ -58,7 +64,7 @@ const Campaigns = () => {
    system,
   };
   const newcampaigns = [...campaignList, newcampaign];
-  setcampaignList(newcampaigns);
+  dispatch(saveCampaign(newcampaigns));
   setCreatecampaign(false);
  };
 
@@ -76,21 +82,33 @@ const Campaigns = () => {
   });
 
   const createSlug = (title) => {
-    return title.toLowerCase().replace(" ", "");
+    return title.toLowerCase().replace(/\s/g, "");
+  }
+
+  const handleSelectedCampaing = (url) => {
+    const selectedCampaign = campaignList.filter(ca => ca.url === url)[0]
+    dispatch(selectCampaign(selectedCampaign))
+    history.push(url)
   }
 
  return (
   <>
    <Card title="Campanhas" bordered={false} style={{ width: "100%" }}>
     <CampaignList>
-     {campaignList.map(({ title, url }) => (
+     {
+       campaignList !== undefined && campaignList.length > 0? 
+      campaignList.map(({ title, url }) => (
       <CampaignListItem
        key={url}
        title={title}
-       onClick={() => history.push(url)}
+       onClick={() => handleSelectedCampaing(url)}
        onDelete={() => showDeleteConfirm(url)}
       />
-     ))}
+     )):(
+      <div style={{ width: "100%" }}>
+        <Empty />
+     </div>
+     )}
     </CampaignList>
     <AddCampaignDiv>
      <Button 

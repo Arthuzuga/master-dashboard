@@ -18,17 +18,28 @@ const FormStyle = styled.div`
 
 const { Option } = Select;
 
-const AddNPCForm = ({ onSubmit, onClose, visible, onDelete }) => {
- const [name, setName] = useState("");
- const [age, setAge] = useState("");
- const [ideal, setIdeal] = useState("");
- const [bond, setBond] = useState("");
- const [flaw, setFlaw] = useState("");
- const [background, setBackground] = useState("");
- const [affiliation, setAffiliation] = useState("");
- const [raceType, setRaceType] = useState("Selecione uma Raça");
- const [alignment, setAlignment] = useState("Selecione uma Alinhamento");
- const [id, setId] = useState("");
+const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcDefault={
+  name: "",
+  age: "",
+  ideal:"",
+  bond: "",
+  flaw: "",
+  background: "",
+  affiliation: "",
+  raceType: "Selecione uma Raça",
+  alignment: "Selecione uma Alinhamento",
+  id: ""
+} }) => {
+ const [name, setName] = useState(npcDefault.name);
+ const [age, setAge] = useState(npcDefault.age);
+ const [ideal, setIdeal] = useState(npcDefault.ideal);
+ const [bond, setBond] = useState(npcDefault.bond);
+ const [flaw, setFlaw] = useState(npcDefault.flaw);
+ const [background, setBackground] = useState(npcDefault.background);
+ const [affiliation, setAffiliation] = useState(npcDefault.affiliation);
+ const [raceType, setRaceType] = useState(npcDefault.raceType);
+ const [alignment, setAlignment] = useState(npcDefault.alignment);
+ const [id, setId] = useState(npcDefault.id);
 
  const onSumbitNPC = () => {
   onSubmit({
@@ -47,8 +58,36 @@ const AddNPCForm = ({ onSubmit, onClose, visible, onDelete }) => {
  };
 
  useEffect(() => {
-  setId((Math.random() * 100).toFixed(0));
- }, []);
+   if(id === "") setId((Math.random() * 100).toFixed(0));
+ }, [id]);
+
+ useEffect(() => {
+  console.log(npcDefault)
+  if(npcDefault.id !== "") {
+    const {
+      name,
+      age,
+      ideal,
+      bond,
+      flaw,
+      background,
+      affiliation,
+      raceType,
+      alignment,
+      id,
+    } = npcDefault
+    setName(name)
+    setAge(age)
+    setIdeal(ideal)
+    setBond(bond)
+    setFlaw(flaw)
+    setBackground(background)
+    setAffiliation(affiliation)
+    setRaceType(raceType)
+    setAlignment(alignment)
+    setId(id)
+  }
+ }, [npcDefault]);
 
  const handleRaceSelection = (raceSelected) => {
   setRaceType(raceSelected);
@@ -59,7 +98,7 @@ const AddNPCForm = ({ onSubmit, onClose, visible, onDelete }) => {
 
  return (
   <Drawer
-   title="Adicionar novo NPC"
+   title={npcDefault.id ? "Editar NPC" : "Adicionar novo NPC"}
    onClose={onClose}
    width={720}
    bodyStyle={{ paddingBottom: 80 }}

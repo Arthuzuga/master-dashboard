@@ -4,6 +4,8 @@ import monsters from "./monsters_reducer";
 import equipments from "./equipments_reducer";
 import sessions from "./sessions_reducer";
 import playerInfo from "./playerInfo_reducer";
+import campaigns from "./campaign_reducer"
+import selectedCampaign from "./selectCampaign_reducer"
 
 const rootReducer = combineReducers({
  example,
@@ -11,6 +13,8 @@ const rootReducer = combineReducers({
  equipments,
  sessions,
  playerInfo,
+ campaigns,
+ selectedCampaign,
 });
 
 export default rootReducer;
