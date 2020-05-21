@@ -448,10 +448,16 @@ const editChapter = (index, newChapter) => {
    </SessionSection>
    <DeleteChapterDiv>
     <Button 
+    backgroundColor="#474747"
+    textColor="white"
+    onClick={() => history.push(campaignSelected.url)}
+    >
+        Cancelar
+    </Button>
+    <Button 
     backgroundColor="#b21f66"
     textColor="white"
     onClick={addSession}
-    // disable
     >
         Salvar Sessão
     </Button>
