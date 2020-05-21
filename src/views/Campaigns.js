@@ -62,6 +62,9 @@ const Campaigns = () => {
    title,
    url,
    system,
+   players: [],
+   sessions :[],
+   npcs :[],
   };
   const newcampaigns = [...campaignList, newcampaign];
   dispatch(saveCampaign(newcampaigns));
@@ -140,7 +143,7 @@ const Campaigns = () => {
       onKeyUp={(e) => {
        if (e.keyCode === 13) {
         const url = createSlug(inputTitle);
-        Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
+        Addcampaign(inputTitle, inputSystem, `/campaigns/${url}`);
        }
       }}
      />
