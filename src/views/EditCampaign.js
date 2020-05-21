@@ -7,8 +7,8 @@ import { Card, Avatar, Collapse, Empty } from "antd";
 
 import { Icon } from '@iconify/react';
 import trashAlt from '@iconify/icons-fa-regular/trash-alt';
+import plusSquare from '@iconify/icons-fa-regular/plus-square';
 
-import { Button } from "../Component";
 import { EditAndDelete } from "../Containers";
 import { AddPlayerForm, AddNPCForm} from "../Templates";
 
@@ -61,6 +61,16 @@ const AvatarWrapper = styled.div`
 
 const StyledIcon = styled(Icon)`
   cursor: pointer;
+`
+
+const SectionHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 4px;
+  span {
+    font-weight: 600;
+  }
 `
 
 const SessionsListItem = ({ title, onClick, onDelete }) => (
@@ -303,22 +313,21 @@ const EditCampaign = () => {
         <span>{system}</span>
       </CampaignSection>
       <CampaignSection>
-        <h1>
-        <span>JOGADORES</span>
-        <Button
-          backgroundColor= "#b21f66"
-          textColor="white"
-          onClick={OpenAddPlayerForm}
-          >
-            Adicionar
-          </Button>
-        <AddPlayerForm
-          visible={addPlayerFormVisible}
-          onClose={() => setPlayerFormVisible(false)}
-          onSubmit={AddPlayer}
-          onDelete={DeletePlayer}
-        />
-        </h1>
+        <SectionHeader>
+          <span>JOGADORES</span>
+          <StyledIcon
+            height="16" 
+            icon={plusSquare}        
+            onClick={OpenAddPlayerForm}
+            style={{marginLeft: "1rem"}}
+          />
+          <AddPlayerForm
+            visible={addPlayerFormVisible}
+            onClose={() => setPlayerFormVisible(false)}
+            onSubmit={AddPlayer}
+            onDelete={DeletePlayer}
+          />
+        </SectionHeader>
       {
       players !== undefined && players.length > 0 ? (
         players.map(
@@ -343,19 +352,21 @@ const EditCampaign = () => {
         )
       )
       ):(
-        <Empty />
+        <PlayerItem>
+          <Empty />
+        </PlayerItem>
       )}
     </CampaignSection>
     <CampaignSection>
-      <h1>
-      <span>SESSÕES</span>
-      <Button 
-        backgroundColor= "#b21f66"
-        textColor="white"
-        onClick={() => history.push("/sessions/newSession")}>
-        Adicionar
-      </Button>
-      </h1>
+      <SectionHeader>
+        <span>SESSÕES</span>
+        <StyledIcon
+          height="16" 
+          icon={plusSquare}        
+          onClick={() => history.push("/sessions/newSession")}
+          style={{marginLeft: "1rem"}}
+        />
+      </SectionHeader>
       <Collapse accordion bordered={false}>
       {
       sessions !== undefined && sessions.length > 0 ?
@@ -368,27 +379,30 @@ const EditCampaign = () => {
         />
         </Panel>
       )) : (
-        <Empty/>
+        <PlayerItem>
+          <Empty />
+        </PlayerItem>
       )}
       </Collapse>
     </CampaignSection>
     <CampaignSection>
-      <h1>
-      <span>NPCs</span>
-      <Button 
-        backgroundColor= "#b21f66"
-        textColor="white"
-        onClick={() => setNPCFormVisible(true)}>
-        Adicionar
-      </Button>
-      <AddNPCForm
-        visible={addNPCFormVisible}
-        onClose={() => setNPCFormVisible(false)}
-        onSubmit={AddNPC}
-        onDelete={DeleteNPC}
-        npcDefault={npcSelected}
-      />
-      </h1>
+      <SectionHeader>
+        <span>NPCs</span>
+        <StyledIcon
+          height="16" 
+          icon={plusSquare}
+          onClick={() => setNPCFormVisible(true)}
+          style={{marginLeft: "1rem"}}
+        />
+
+        <AddNPCForm
+          visible={addNPCFormVisible}
+          onClose={() => setNPCFormVisible(false)}
+          onSubmit={AddNPC}
+          onDelete={DeleteNPC}
+          npcDefault={npcSelected}
+        />
+      </SectionHeader>
       <Collapse accordion bordered={false}>
       {
       npcs !== undefined && npcs.length > 0 ?
@@ -411,7 +425,9 @@ const EditCampaign = () => {
         </Panel>
         )
       ): (
-        <Empty />
+        <PlayerItem>
+          <Empty />
+        </PlayerItem>
       )}
       </Collapse>
     </CampaignSection>
