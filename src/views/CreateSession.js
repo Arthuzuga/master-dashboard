@@ -20,7 +20,8 @@ import {
     MonstersInfo,
     ChallengeInfo,
     MusicInfo,
-    DescriptionInfo
+    DescriptionInfo,
+    EquipmentInfo
 } from "../Templates";
 
 const chapterTemplate = {
@@ -95,6 +96,7 @@ const CreateSession = () => {
  const [addNPCModalOpen, setNPCModalOpen] = useState(false);
  const [addMonstersOpen, setMonstersOpen] = useState(false);
  const [addChallengeModalOpen, setChallengeModalOpen] = useState(false);
+ const [addEquipModalOpen, setEquipModalOpen] = useState(false);
 
 
  useEffect(() => {
@@ -153,6 +155,13 @@ const editChapter = (index, newChapter) => {
   };
   editChapter(index, newChapter)  
  };
+ const setEquipments = (equipment, index) => {
+   const newChapter = {
+     ...chapters[index],
+   magicItems: [...chapters[index].magicItems, equipment],
+  };
+  editChapter(index, newChapter)  
+ };
 
  const setChapterDescription = (newDescription, index) => {
   const newChapter = {
@@ -178,6 +187,13 @@ const editChapter = (index, newChapter) => {
       const newChapter = {
           ...chapters[indexChapter],
           monsters: [...chapters[indexChapter].monsters.filter(des => des.name !== name)],
+         };
+         editChapter(indexChapter, newChapter)   
+   }
+    const deleteEquipment = (name, indexChapter) => {
+      const newChapter = {
+          ...chapters[indexChapter],
+          magicItems: [...chapters[indexChapter].magicItems.filter(des => des.name !== name)],
          };
          editChapter(indexChapter, newChapter)   
    }
@@ -405,32 +421,18 @@ const editChapter = (index, newChapter) => {
 
         <PlayerItem>
          <PlayerInfo>
-          <TitleInfo>
-           <span>Itens Mágicos: </span>
-           <Button
-            backgroundColor="#373737" 
-            textColor="white"
-            disable
-            >
-                Editar
-            </Button>
-          </TitleInfo>
-          <div>
-           {magicItems.length > 0 ? (
-            magicItems.map(({ id, title }) => (
-             <div key={id} style={{ margin: "1rem 0" }}>
-              <TitleInfo>Título:</TitleInfo>
-              <span> {title}</span>
-             </div>
-            ))
-           ) : (
-            <div style={{ margin: "1rem 0" }}>
-             <TitleInfo>
-              Não há itens mágicos selecionados
-             </TitleInfo>
-            </div>
-           )}
-          </div>
+          <EquipmentInfo 
+                equipments={magicItems}
+                indexChapter={indexChapter}
+                onEdit={() => setEquipModalOpen(true)}
+                onModalClose={() => setEquipModalOpen(false)}
+                isModalOpen={addEquipModalOpen}
+                onSubmitForm={(equipment) => {
+                  setEquipments(equipment, indexChapter);
+                  setEquipModalOpen(false);
+                  }}
+                onDelete={deleteEquipment}
+            />
          </PlayerInfo>
         </PlayerItem>
         <DeleteChapterDiv>

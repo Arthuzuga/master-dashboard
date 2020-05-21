@@ -3,7 +3,11 @@ export const getEquipmentsCategory = async () => {
  return res.json();
 };
 
-export const getEquipments = async (url) => {
+export const getEquipmentList = async (url) => {
+ const res = await fetch(`https://www.dnd5eapi.co${url}`);
+ return res.json();
+};
+export const getEquipmentData = async (url) => {
  const res = await fetch(`https://www.dnd5eapi.co${url}`);
  return res.json();
 };
