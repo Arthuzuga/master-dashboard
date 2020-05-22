@@ -112,7 +112,7 @@ const CreateSession = () => {
  const AddChapter = () => {
   const newChapters = [...chapters, {
     ...chapterTemplate,
-    id: (Math.random() * 1000).toFixed(0),
+    id: chapters.length + 1,
 }];
   setChapters(newChapters);
  };
