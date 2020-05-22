@@ -1,6 +1,8 @@
 # RPG Master's Dashboard
 [![Build Status](https://jenkins.caioalcantara.dev/buildStatus/icon?job=RPG+Master+Dashboard)](https://jenkins.caioalcantara.dev/job/RPG%20Master%20Dashboard/)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1d1d0297-a7e9-48e7-9059-8a595576e460/deploy-status)](https://app.netlify.com/sites/jovial-galileo-20c616/deploys)
+
 This project comes as a POC - proof of concept, of an idea to makes easy to new DMs or senior DMs to play D&D at the beginning, but I will work on to expand it to other systems such as _Call of Cthulhu_ , _Shadowrun_, _The Exoterrorism_, etc...
 
 ## Available Scripts
@@ -23,16 +25,17 @@ Enjoy it on: [https://jovial-galileo-20c616.netlify.com/](https://jovial-galileo
 - [x] Campaign's List
 - [x] Add/Edit Campaign's Page
 - [x] Session's List
-- [ ] Add/Edit Session's Page
-- [ ] Add/Edit General Info
-- [ ] Add/Edit Description
-- [ ] Chapter's List
-- [ ] Add/Edit Chapter
-- [ ] Add/Edit Chapter's info
-- [x] List NPC
+- [x] Add/Edit Session's Page
+- [x] Add/Edit General Info
+- [x] Add/Edit Description
+- [x] Chapter's List
+- [x] Add/Edit Chapter
+- [x] Add/Edit Chapter's info
+- [x] NPC List
 - [x] Add/Edit NPC
-- [x] List Monster
-- [x] Add/Remove Moster
-- [x] List Challengers
-- [ ] Add/Edit Challengers
-- [ ] List Items   
+- [x] Monster List
+- [x] Add/Remove Monster
+- [x] Challenges List
+- [x] Add/Edit Challenges
+- [x] Items List   
+- [x] Add/Remove Items   
