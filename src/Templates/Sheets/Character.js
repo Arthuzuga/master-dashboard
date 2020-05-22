@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import "./style.css"
+import { Spin } from "antd"
 import { modifiersOnSheet } from '../../helpers/functions'
 import { useSelector } from 'react-redux'
+
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const Character = () => {
   const playerInfo = useSelector(state => state.playerInfo)
@@ -53,6 +57,9 @@ const Character = () => {
   const [sleight, setSleight] = useState(false)
   const [stealth, setStealth] = useState(false)
   const [survival, setSurvival] = useState(false)
+
+  // download spin
+  const [isDownloading, setDownloading] = useState(false)
 
   useEffect(() => {
     if (playerInfo.characterName !== ""){
@@ -161,8 +168,35 @@ const Character = () => {
 
   }
 
+  const downloadCertificate = () =>
+  {
+    setDownloading(true)
+    const input = document.getElementById("characterSheet");
+
+    html2canvas(input, {
+      profile: true,
+      useCORS: false,
+    }).then((canvas: any) => {
+      const imgData = canvas.toDataURL();
+      const pdf = new jsPDF();
+      pdf.addImage(imgData, "PNG",  -25, 5, 260, 290.5);
+      pdf.save("characterSheet.pdf");
+      setDownloading(false)
+    });
+  };
+
+  if (isDownloading) {
+    return (
+    <>
+      <Spin size={80}/>
+    </>
+    )
+  }
+
   return (
-    <div>
+    <>
+    <button onClick={downloadCertificate}>Download da ficha</button>
+    <div id="characterSheet">
       <form class="charsheet">
         <header>
           <section class="charname">
@@ -691,6 +725,7 @@ const Character = () => {
         </main>
       </form>
     </div>
+    </>
   )
 }
 

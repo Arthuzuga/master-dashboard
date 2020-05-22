@@ -259,7 +259,7 @@ const editChapter = (index, newChapter) => {
 
 
  return (
-  <Card title="Nova sessão" bordered={false} style={{ width: "100%" }}>
+  <Card title={sessionId ? "Editar sessão" : "Nova sessão"} bordered={false} style={{ width: "100%" }}>
    <SessionSection>
     <h1>Informações gerais</h1>
     <div>
