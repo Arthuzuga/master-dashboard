@@ -26,18 +26,18 @@ const Home = () => {
    <p>
     Esta versão trata-se de uma prova de conceito visual, e de interação
     navegador apenas, sem conexão com servidor, suas alterações não serão salvas
-    ao fechar ou ao recarregar a página
+    ao fechar a página.
    </p>
    <h3>Aviso para o futuro:</h3>
    <p>
     Para que nossa plataforma continue gratuita, por favor insira a URL das
-    imagens que for usar nos campos apropriados
+    imagens que for usar nos campos apropriados.
    </p>
    <p>
     As URLs podem ser do google drive/dropbox/pinterest ou de qualquer
-    armazenador pessoal que possua
+    armazenador pessoal que possua.
    </p>
-   <h3>Divirta-se com a plataforma</h3>
+   <h3>Divirta-se com a plataforma.</h3>
    <p>
     Para feedbacks por favor, mande mensagem para o meu Twitter:
     <a href="https://twitter.com/JoaoA_Tavares"> @JoaoA_Tavares</a>
