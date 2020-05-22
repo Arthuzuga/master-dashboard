@@ -3,9 +3,11 @@ import styled from "styled-components";
 import { Layout, Menu } from "antd";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import saveMonsters from "./redux/actions/save_monsters";
 import saveEquipment from "./redux/actions/save_equipments";
+import selectCampaing from "./redux/actions/select_campaign"
+import selectSession from "./redux/actions/select_session"
 
 import { Home, Campaigns, EditCampaign, CreateSession } from "./views";
 import { Drawer } from "./Component";
@@ -41,12 +43,29 @@ const Wrapper = styled.div`
 
 const App = (props) => {
  const { saveMonster, saveEquipmentCategory } = props;
+  const dispatch = useDispatch()
+
  const [drawerVisible, setDrawerVisibility] = useState(true);
 
  useEffect(() => {
   getMonsters().then((res) => saveMonster(res.results));
   getEquipmentsCategory().then((res) => saveEquipmentCategory(res.results));
  }, [saveMonster, saveEquipmentCategory]);
+
+ useEffect(() => {
+   const rawSelectedCampaign = localStorage.getItem('selectedCampaign')
+   const rawSelectedSession = localStorage.getItem('selectedSession')
+   if (rawSelectedCampaign) {
+     const selectedCampaign = JSON.parse(rawSelectedCampaign)
+     dispatch(selectCampaing(selectedCampaign))
+   }
+
+   if (rawSelectedSession) {
+     const selectedSession = JSON.parse(rawSelectedSession)
+     dispatch(selectSession(selectedSession))
+   }
+
+ },[dispatch])
 
  return (
   <Router>
@@ -79,6 +98,7 @@ const App = (props) => {
       <Wrapper>
        <Switch>
         <Route exact path="/" component={Home} />
+        <Route path="/campaigns/player" component={Character} />
         <Route path="/campaigns/:id" component={EditCampaign} />
         <Route path="/campaigns" component={Campaigns} />
         <Route path="/sessions/editSession" component={CreateSession} />

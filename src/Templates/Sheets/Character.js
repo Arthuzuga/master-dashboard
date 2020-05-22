@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import "./style.css"
-import { Spin } from "antd"
+import { Spin, Card } from "antd"
 import { modifiersOnSheet } from '../../helpers/functions'
 import { useSelector } from 'react-redux'
 
@@ -179,7 +179,7 @@ const Character = () => {
     }).then((canvas: any) => {
       const imgData = canvas.toDataURL();
       const pdf = new jsPDF();
-      pdf.addImage(imgData, "PNG",  -25, 5, 260, 290.5);
+      pdf.addImage(imgData, "PNG",  -35, 5, 280, 290.5);
       pdf.save("characterSheet.pdf");
       setDownloading(false)
     });
@@ -194,7 +194,7 @@ const Character = () => {
   }
 
   return (
-    <>
+    <Card title="Ficha de Personagem" bordered={false} style={{ width: "100%" }}>
     <button onClick={downloadCertificate}>Download da ficha</button>
     <div id="characterSheet">
       <form class="charsheet">
@@ -725,7 +725,7 @@ const Character = () => {
         </main>
       </form>
     </div>
-    </>
+    </Card>
   )
 }
 

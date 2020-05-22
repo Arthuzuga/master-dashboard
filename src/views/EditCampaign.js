@@ -203,7 +203,7 @@ const EditCampaign = () => {
     raceType,
     level,
   }))
-  history.push("/teste")
+  history.push("/campaigns/player")
  }
 
  const AddPlayer = ({
