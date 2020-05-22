@@ -5,3 +5,4 @@ export const SAVE_SESSIONS = "SAVE_SESSIONS";
 export const SAVE_PLAYER = "SAVE_PLAYER";
 export const SAVE_CAMPAIGN = "SAVE_CAMPAIGN";
 export const SELECT_CAMPAIGN = "SELECT_CAMPAIGN";
+export const SELECT_SESSION = "SELECT_SESSION";

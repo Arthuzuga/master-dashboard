@@ -10,7 +10,6 @@ import plusSquare from '@iconify/icons-fa-regular/plus-square';
 import selectCampaign from "../redux/actions/select_campaign";
 import saveCampaign from "../redux/actions/save_campaign";
 
-import { sessionList } from "../mock";
 import { Button, TitleInfo } from "../Component"
 import { 
     AddMusicForm, 
@@ -84,6 +83,7 @@ const StyledIcon = styled(Icon)`
 const CreateSession = () => {
   const history = useHistory();
   const campaignSelected = useSelector(state => state.selectedCampaign)
+  const sessionSelected = useSelector(state => state.selectedSession)
   const campaignList = useSelector(state => state.campaigns)
   const dispatch = useDispatch()
 
@@ -97,12 +97,17 @@ const CreateSession = () => {
  const [addMonstersOpen, setMonstersOpen] = useState(false);
  const [addChallengeModalOpen, setChallengeModalOpen] = useState(false);
  const [addEquipModalOpen, setEquipModalOpen] = useState(false);
-
+ const [sessionId, setSessionId] = useState("")
 
  useEffect(() => {
-  const chapterList = sessionList[0].chapters;
-  setChapters(chapterList);
- }, []);
+   if (sessionSelected.id !== undefined) {
+    const {id, title, description, chapters } = sessionSelected
+     setChapters(chapters);
+     setTitle(title)
+     setDescription(description)
+     setSessionId(id)
+   }
+ }, [sessionSelected]);
 
  const AddChapter = () => {
   const newChapters = [...chapters, {
@@ -219,19 +224,37 @@ const editChapter = (index, newChapter) => {
 
   const addSession = () => {
     const sessions = campaignSelected.sessions;
-    const newSession = {
-      id: sessions.length +1,
-      title: title ,
-      description: description,
-      chapters: chapters,
-     };
-    const newCampaignData = {
-      ...campaignSelected,
-      sessions: [...sessions, newSession]
+    if (sessionSelected.id === undefined) {
+      const newSession = {
+        id: sessions.length +1,
+        title: title ,
+        description: description,
+        chapters: chapters,
+       };
+       const newCampaignData = {
+         ...campaignSelected,
+         sessions: [...sessions, newSession]
+       }
+       dispatch(selectCampaign(newCampaignData))
+       editAllCampaigns(newCampaignData.url, newCampaignData)
+       history.push(newCampaignData.url)
+    } else {
+      const newSession = {
+        id: sessionId,
+        title: title ,
+        description: description,
+        chapters: chapters,
+       };
+       const editArray = sessions.filter(sess => sess.id !== sessionId)
+       const sortSessions = sortArray([...editArray, newSession])
+       const newCampaignData = {
+         ...campaignSelected,
+         sessions: sortSessions
+       }
+       dispatch(selectCampaign(newCampaignData))
+       editAllCampaigns(newCampaignData.url, newCampaignData)
+       history.push(newCampaignData.url)
     }
-    dispatch(selectCampaign(newCampaignData))
-    editAllCampaigns(newCampaignData.url, newCampaignData)
-    history.push(newCampaignData.url)
   }
 
 

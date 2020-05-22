@@ -15,6 +15,7 @@ import { AddPlayerForm, AddNPCForm} from "../Templates";
 import savePlayerInfo from "../redux/actions/save_playerInfo";
 import selectCampaign from "../redux/actions/select_campaign";
 import saveCampaign from "../redux/actions/save_campaign";
+import selectSession from "../redux/actions/select_session";
 
 const { Panel } = Collapse;
 
@@ -390,12 +391,15 @@ const EditCampaign = () => {
     <Collapse accordion bordered={false}>
     {
     sessions !== undefined && sessions.length > 0 ?
-    sessions.map(({ title, description, id }) => (
-      <Panel key={id} header={title}>
+    sessions.map((session) => (
+      <Panel key={session.id} header={session.title}>
       <SessionsListItem
-        title={`${description} da sessão ${title}`}
-        onClick={() => console.log("oi")}
-        onDelete={() => DeleteSession(id)}
+        title={`${session.description} da sessão ${title}`}
+        onClick={() => {
+          dispatch(selectSession(session))
+          history.push('/sessions/editSession')
+        }}
+        onDelete={() => DeleteSession(session.id)}
       />
       </Panel>
     )) : (

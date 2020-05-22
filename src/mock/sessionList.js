@@ -4,7 +4,7 @@ import playlist from "./playlist";
 
 const sessions = [
  {
-  id: "1",
+  id: 1,
   title: "As Chamas da Noite",
   description: "Descrição",
   chapters: [
@@ -33,12 +33,12 @@ const sessions = [
   ],
  },
  {
-  id: "2",
+  id: 2,
   title: "O Segredo da Cidade",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -49,12 +49,12 @@ const sessions = [
   ],
  },
  {
-  id: "3",
+  id: 3,
   title: "Em Busca de Respostas",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -65,12 +65,12 @@ const sessions = [
   ],
  },
  {
-  id: "4",
+  id: 4,
   title: "A Casa Abandonada",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -81,12 +81,12 @@ const sessions = [
   ],
  },
  {
-  id: "5",
+  id: 5,
   title: "As Três Portas",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -97,12 +97,12 @@ const sessions = [
   ],
  },
  {
-  id: "6",
+  id: 6,
   title: "Reencontros",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -113,12 +113,12 @@ const sessions = [
   ],
  },
  {
-  id: "7",
+  id: 7,
   title: "Uma noite estranha",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -129,12 +129,12 @@ const sessions = [
   ],
  },
  {
-  id: "8",
+  id: 8,
   title: "A porta da esquerda",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -145,12 +145,12 @@ const sessions = [
   ],
  },
  {
-  id: "9",
+  id: 9,
   title: "A luz do lago",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -161,12 +161,12 @@ const sessions = [
   ],
  },
  {
-  id: "10",
+  id: 10,
   title: "A passagem dos deuses",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -177,12 +177,12 @@ const sessions = [
   ],
  },
  {
-  id: "11",
+  id: 11,
   title: "A ilha e o cristal",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -193,12 +193,12 @@ const sessions = [
   ],
  },
  {
-  id: "12",
+  id: 12,
   title: "O enigma de Svently",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -209,12 +209,12 @@ const sessions = [
   ],
  },
  {
-  id: "13",
+  id: 13,
   title: "A provação de Artrocitus",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -225,12 +225,12 @@ const sessions = [
   ],
  },
  {
-  id: "14",
+  id: 14,
   title: "O sacrifício de Rath'ka",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -241,12 +241,12 @@ const sessions = [
   ],
  },
  {
-  id: "15",
+  id: 15,
   title: "A prova de Natrono",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -257,12 +257,12 @@ const sessions = [
   ],
  },
  {
-  id: "16",
+  id: 16,
   title: "A quebra, a transformação e o sonho",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -273,12 +273,12 @@ const sessions = [
   ],
  },
  {
-  id: "17",
+  id: 17,
   title: "A fenda planar",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],
@@ -289,12 +289,12 @@ const sessions = [
   ],
  },
  {
-  id: "18",
+  id: 18,
   title: "De volta para o futuro",
   description: "Descrição",
   chapters: [
    {
-    id: "1",
+    id: 1,
     description:[],
     playlist: [],
     npcs: [],

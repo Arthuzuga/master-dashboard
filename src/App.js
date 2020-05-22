@@ -81,6 +81,7 @@ const App = (props) => {
         <Route exact path="/" component={Home} />
         <Route path="/campaigns/:id" component={EditCampaign} />
         <Route path="/campaigns" component={Campaigns} />
+        <Route path="/sessions/editSession" component={CreateSession} />
         <Route path="/sessions/newSession" component={CreateSession} />
         <Route path="/teste" component={Character} />
        </Switch>

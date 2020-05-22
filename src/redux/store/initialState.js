@@ -14,4 +14,5 @@ export default {
  },
  campaigns: campaignList,
  selectedCampaign: {},
+ selectedSession: {},
 };

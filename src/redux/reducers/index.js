@@ -6,6 +6,7 @@ import sessions from "./sessions_reducer";
 import playerInfo from "./playerInfo_reducer";
 import campaigns from "./campaign_reducer"
 import selectedCampaign from "./selectCampaign_reducer"
+import selectedSession from "./selectSession_reducer"
 
 const rootReducer = combineReducers({
  example,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
  playerInfo,
  campaigns,
  selectedCampaign,
+ selectedSession,
 });
 
 export default rootReducer;
