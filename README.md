@@ -1,8 +1,6 @@
 # RPG Master's Dashboard
 [![Build Status](https://jenkins.caioalcantara.dev/buildStatus/icon?job=RPG+Master+Dashboard)](https://jenkins.caioalcantara.dev/job/RPG%20Master%20Dashboard/)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/1d1d0297-a7e9-48e7-9059-8a595576e460/deploy-status)](https://app.netlify.com/sites/jovial-galileo-20c616/deploys)
-
 This project comes as a POC - proof of concept, of an idea to makes easy to new DMs or senior DMs to play D&D at the beginning, but I will work on to expand it to other systems such as _Call of Cthulhu_ , _Shadowrun_, _The Exoterrorism_, etc...
 
 ## Available Scripts
@@ -19,7 +17,7 @@ You will also see any lint errors in the console.
 
 ### Deployment
 
-Enjoy it on: [https://jovial-galileo-20c616.netlify.com/](https://jovial-galileo-20c616.netlify.com/)
+Enjoy it on: [https://dashboard-master.com/](https://dashboard-master.com/)
 
 ### Features
 - [x] Campaign's List
