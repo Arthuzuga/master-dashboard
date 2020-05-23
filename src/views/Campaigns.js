@@ -161,7 +161,7 @@ const Campaigns = () => {
       textColor="white" 
        onClick={() => {
         const url = createSlug(inputTitle);
-        Addcampaign(inputTitle, inputSystem, `/campaign/${url}`);
+        Addcampaign(inputTitle, inputSystem, `/campaigns/${url}`);
        }}
       >
        Adicionar Conta
