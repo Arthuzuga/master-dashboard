@@ -57,9 +57,18 @@ const Campaigns = () => {
   );
   dispatch(saveCampaign(filteredcampaign))
  };
+
+ const sortArray = (array) => {
+  return array.sort((a,b) => {
+      if (a.id < b.id) return -1
+      if (a.id > b.id) return 1
+      return 0
+  })
+}
+
  const Addcampaign = (title, system, url) => {
   const newcampaign = {
-    id: CampaignList.length +1,
+    id: campaignList.length +1,
    title,
    url,
    system,
@@ -67,7 +76,7 @@ const Campaigns = () => {
    sessions :[],
    npcs :[],
   };
-  const newcampaigns = [...campaignList, newcampaign];
+  const newcampaigns = sortArray([...campaignList, newcampaign]);
   dispatch(saveCampaign(newcampaigns));
   setCreatecampaign(false);
  };
