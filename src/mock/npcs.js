@@ -1,6 +1,6 @@
 const npcs = [
  {
-  id: "1",
+  id: 1,
   name: "Harold",
   age: "56 anos",
   raceType: "Humano",
@@ -13,7 +13,7 @@ const npcs = [
   items: [],
  },
  {
-  id: "2",
+  id: 2,
   name: "Matilde",
   age: "45 anos",
   raceType: "Humano",

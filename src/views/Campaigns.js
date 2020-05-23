@@ -59,6 +59,7 @@ const Campaigns = () => {
  };
  const Addcampaign = (title, system, url) => {
   const newcampaign = {
+    id: CampaignList.length +1,
    title,
    url,
    system,

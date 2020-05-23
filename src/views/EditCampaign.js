@@ -128,7 +128,6 @@ const NPCListItem = ({
  ideal,
  bond,
  flaws,
- onClick,
  onDelete,
 }) => (
  <>
@@ -157,7 +156,10 @@ const NPCListItem = ({
     <PlayerInfoTitle>Falhas:</PlayerInfoTitle>
     <span>{flaws}</span>
    </PlayerInfo>
-   <EditAndDelete onEdit={onClick} onDelete={onDelete}/>
+   <StyledIcon 
+      icon={trashAlt}
+      onClick={onDelete}
+    />
   </PlayerItem>
  </>
 );
@@ -169,7 +171,6 @@ const EditCampaign = () => {
   const campaignList = useSelector(state => state.campaigns)
 
  const [campaign, setCampaign] = useState("");
- const [npcSelected, setNPCSelection] = useState("");
  const [addPlayerFormVisible, setPlayerFormVisible] = useState(false);
  const [addNPCFormVisible, setNPCFormVisible] = useState(false);
 
@@ -178,9 +179,17 @@ const EditCampaign = () => {
      setCampaign(campaignSelected);
  }, [campaignSelected]);
 
+ const sortArray = (array) => {
+  return array.sort((a,b) => {
+      if (a.id < b.id) return -1
+      if (a.id > b.id) return 1
+      return 0
+  })
+}
+
  const editAllCampaigns = (url,newCampaignData ) => {
     const campaignEdited = campaignList.filter((camp) => camp.url !== url)
-    const newCampaigns = [...campaignEdited, newCampaignData]
+    const newCampaigns = sortArray([...campaignEdited, newCampaignData])
     dispatch(saveCampaign(newCampaigns))
  }
 
@@ -421,10 +430,12 @@ const EditCampaign = () => {
 
       <AddNPCForm
         visible={addNPCFormVisible}
-        onClose={() => setNPCFormVisible(false)}
+        onClose={() => {
+          setNPCFormVisible(false)
+        }}
         onSubmit={AddNPC}
         onDelete={DeleteNPC}
-        npcDefault={npcSelected}
+        npcs={npcs || []}
       />
     </SectionHeader>
     <Collapse accordion bordered={false}>
@@ -441,7 +452,6 @@ const EditCampaign = () => {
         bond={bond}
         flaws={flaw}
         onClick={() => {
-          setNPCSelection({ id, name, age, raceType, alignment, ideal, bond, flaw })
           setNPCFormVisible(true)
         }}
         onDelete={() => DeleteNPC(id)}

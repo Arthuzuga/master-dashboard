@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Drawer, Button, Input, Select } from "antd";
 import racetypes from "../../mock/raceTypes";
@@ -18,32 +18,20 @@ const FormStyle = styled.div`
 
 const { Option } = Select;
 
-const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcDefault={
-  name: "",
-  age: "",
-  ideal:"",
-  bond: "",
-  flaw: "",
-  background: "",
-  affiliation: "",
-  raceType: "Selecione uma Raça",
-  alignment: "Selecione uma Alinhamento",
-  id: ""
-} }) => {
- const [name, setName] = useState(npcDefault.name);
- const [age, setAge] = useState(npcDefault.age);
- const [ideal, setIdeal] = useState(npcDefault.ideal);
- const [bond, setBond] = useState(npcDefault.bond);
- const [flaw, setFlaw] = useState(npcDefault.flaw);
- const [background, setBackground] = useState(npcDefault.background);
- const [affiliation, setAffiliation] = useState(npcDefault.affiliation);
- const [raceType, setRaceType] = useState(npcDefault.raceType);
- const [alignment, setAlignment] = useState(npcDefault.alignment);
- const [id, setId] = useState(npcDefault.id);
+const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcs }) => {
+ const [name, setName] = useState("");
+ const [age, setAge] = useState("");
+ const [ideal, setIdeal] = useState("");
+ const [bond, setBond] = useState("");
+ const [flaw, setFlaw] = useState("");
+ const [background, setBackground] = useState("");
+ const [affiliation, setAffiliation] = useState("");
+ const [raceType, setRaceType] = useState("Selecione uma Raça");
+ const [alignment, setAlignment] = useState( "Selecione uma Alinhamento");
 
  const onSumbitNPC = () => {
   onSubmit({
-   id,
+   id: npcs.length+1,
    name,
    age,
    raceType,
@@ -57,38 +45,6 @@ const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcDefault={
   });
  };
 
- useEffect(() => {
-   if(id === "") setId((Math.random() * 100).toFixed(0));
- }, [id]);
-
- useEffect(() => {
-  console.log(npcDefault)
-  if(npcDefault.id !== "") {
-    const {
-      name,
-      age,
-      ideal,
-      bond,
-      flaw,
-      background,
-      affiliation,
-      raceType,
-      alignment,
-      id,
-    } = npcDefault
-    setName(name)
-    setAge(age)
-    setIdeal(ideal)
-    setBond(bond)
-    setFlaw(flaw)
-    setBackground(background)
-    setAffiliation(affiliation)
-    setRaceType(raceType)
-    setAlignment(alignment)
-    setId(id)
-  }
- }, [npcDefault]);
-
  const handleRaceSelection = (raceSelected) => {
   setRaceType(raceSelected);
  };
@@ -98,20 +54,13 @@ const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcDefault={
 
  return (
   <Drawer
-   title={npcDefault.id ? "Editar NPC" : "Adicionar novo NPC"}
+   title="Adicionar novo NPC"
    onClose={onClose}
    width={720}
    bodyStyle={{ paddingBottom: 80 }}
    visible={visible}
    footer={
     <Footer>
-     <Button
-      onClick={() => onDelete(id)}
-      style={{ marginRight: 8 }}
-      type="danger"
-     >
-      Apagar
-     </Button>
      <Button onClick={onClose} style={{ marginRight: 8 }}>
       Cancelar
      </Button>
@@ -130,7 +79,7 @@ const AddNPCForm = ({ onSubmit, onClose, visible, onDelete, npcDefault={
     />
     <Input
      addonBefore="Idade do Personagem"
-     value={age}
+     value={age && age.replace(/\s[a-z]{4}/,"")}
      onChange={(e) => setAge(e.target.value)}
      style={{ width: "48%", marginBottom: "1rem" }}
      type="number"

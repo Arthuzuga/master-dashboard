@@ -58,7 +58,7 @@ const App = (props) => {
    const rawSelectedSession = localStorage.getItem('selectedSession')
    const rawCampaigns = localStorage.getItem('campaigns')
 
-   if (rawSelectedCampaign) {
+   if (rawCampaigns) {
     const campaigns = JSON.parse(rawCampaigns)
     dispatch(saveCampaign(campaigns))
    }

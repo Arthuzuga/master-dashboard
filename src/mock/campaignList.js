@@ -4,6 +4,7 @@ import npcs from './npcs'
 
 const campaigns = [
   {
+    id: 1,
     title: "Crônicas de Belat'nor",
     url: "/campaigns/cronicasBelatnor",
     system: "Dungeons and Dragons",
