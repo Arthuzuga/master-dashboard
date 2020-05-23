@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import saveMonsters from "./redux/actions/save_monsters";
 import saveEquipment from "./redux/actions/save_equipments";
+import saveCampaign from "./redux/actions/save_campaign"
 import selectCampaing from "./redux/actions/select_campaign"
 import selectSession from "./redux/actions/select_session"
 
@@ -55,6 +56,13 @@ const App = (props) => {
  useEffect(() => {
    const rawSelectedCampaign = localStorage.getItem('selectedCampaign')
    const rawSelectedSession = localStorage.getItem('selectedSession')
+   const rawCampaigns = localStorage.getItem('campaigns')
+
+   if (rawSelectedCampaign) {
+    const campaigns = JSON.parse(rawCampaigns)
+    dispatch(saveCampaign(campaigns))
+   }
+
    if (rawSelectedCampaign) {
      const selectedCampaign = JSON.parse(rawSelectedCampaign)
      dispatch(selectCampaing(selectedCampaign))
