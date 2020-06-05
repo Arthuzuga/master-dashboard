@@ -11,6 +11,8 @@ const Container = styled.div`
  background-color: white;
  padding: 4rem;
  text-align: center;
+
+
 `;
 
 const preecher = keyframes`
@@ -73,6 +75,12 @@ const Wrapper = styled.div`
     }
 `
 
+const ThankYouRow = styled.h3`
+    @media only screen and (max-width: 600px) {
+        margin-bottom: 4rem;
+    }
+`
+
 const Home = () => {
  return (
   <Container>
@@ -107,9 +115,9 @@ const Home = () => {
     Para feedbacks por favor, mande mensagem para o meu Twitter:
     <a href="https://twitter.com/JoaoA_Tavares"> @JoaoA_Tavares</a>
    </p>
-   <h3>
+   <ThankYouRow>
     Special thank you to Kevin MacLeod by the free musics on @incompetech
-   </h3>
+   </ThankYouRow>
   </Container>
  );
 };
