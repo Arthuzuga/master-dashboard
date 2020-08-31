@@ -38,7 +38,8 @@ const CustomLayout = styled(Layout)`
 const CustomNav = styled.nav`
   
   position: fixed;
-  background-color: #37474F;
+  /* background-color: #37474F; */
+  background-color: #593563;
   z-index: 10;
   transition: width 400ms ease;
 
@@ -129,7 +130,8 @@ const CustomLink = styled.div`
 
   &:hover {
     filter: opacity(1);
-    background-color: #78909C;
+    /* background-color: #78909C; */
+    background-color: #7d318e;
   }
 
   /* @media only screen and (min-width: 600px){
@@ -146,7 +148,8 @@ const Logo = styled.li`
   text-align: center;
   margin-bottom: 1rem;
   color: #FFE57F;
-  background: #78909C;
+  /* background: #78909C; */
+  background: #7d318e;
   font-size: 1.5rem;
   letter-spacing: 0.3ch;
   width: 100%;
