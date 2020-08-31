@@ -279,29 +279,6 @@ const App = (props) => {
           </CustomNavListItem>
        </CustomNavList>
      </CustomNav>
-    {/* <Drawer
-     onClose={() => setDrawerVisibility(false)}
-     visibility={drawerVisible}
-    >
-     <Menu theme="dark" mode="inline" defaultSelectedKeys={["1"]}>
-      <Logo>DM</Logo>
-      <Menu.Item key="1">
-       <Link to="/">
-        <span className="nav-text">Home</span>
-       </Link>
-      </Menu.Item>
-      <Menu.Item key="2">
-       <Link to="/campaigns">
-        <span className="nav-text">Campanhas</span>
-       </Link>
-      </Menu.Item>
-      <Menu.Item key="3">
-       <Link to="/teste">
-        <span className="nav-text">Teste de Feature</span>
-       </Link>
-      </Menu.Item>
-     </Menu>
-    </Drawer> */}
     <CustomLayout>
      <Content>
       <Wrapper>
